@@ -1,8 +1,7 @@
 package com.example.gameGuidesForUs.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -13,6 +12,7 @@ public class User extends BaseEntity{
     private String username;
     private String password;
     private String email;
+    private List<Comment> allUserComments;
 
     public User() {
     }
@@ -64,6 +64,16 @@ public class User extends BaseEntity{
 
     public User setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    @OneToMany
+    public List<Comment> getAllUserComments() {
+        return allUserComments;
+    }
+
+    public User setAllUserComments(List<Comment> allUserComments) {
+        this.allUserComments = allUserComments;
         return this;
     }
 }
