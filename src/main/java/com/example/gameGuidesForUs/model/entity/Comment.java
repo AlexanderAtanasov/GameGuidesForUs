@@ -5,6 +5,7 @@ import com.example.gameGuidesForUs.model.entity.User;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Comment extends BaseEntity {
     private User commentCreatedBy;
     private Instant createdOn;
     private Instant modifiedOn;
-    private List<Screenshot> screenshots;
+    private List<Screenshot> screenshots = new ArrayList<>();
 
     public Comment() {
     }

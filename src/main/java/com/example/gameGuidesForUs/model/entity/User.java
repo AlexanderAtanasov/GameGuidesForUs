@@ -1,7 +1,12 @@
 package com.example.gameGuidesForUs.model.entity;
 
+import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -12,7 +17,8 @@ public class User extends BaseEntity{
     private String username;
     private String password;
     private String email;
-    private List<Comment> allUserComments;
+    private List<Comment> allUserComments = new ArrayList<>();
+    private Set<UserRoleEntity> roles = new HashSet<>();
 
     public User() {
     }
@@ -74,6 +80,16 @@ public class User extends BaseEntity{
 
     public User setAllUserComments(List<Comment> allUserComments) {
         this.allUserComments = allUserComments;
+        return this;
+    }
+
+    @OneToMany
+    public Set<UserRoleEntity> getRoles() {
+        return roles;
+    }
+
+    public User setRoles(Set<UserRoleEntity> roles) {
+        this.roles = roles;
         return this;
     }
 }

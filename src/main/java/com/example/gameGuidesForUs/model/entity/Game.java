@@ -4,6 +4,7 @@ import com.example.gameGuidesForUs.model.entity.enums.GenreEnum;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Game extends BaseEntity {
     private GenreEnum genre;
     private LocalDate releasedOn;
     private String gameScreenshotUrl;
-    private List<Guide> guides;
+    private List<Guide> guides = new ArrayList<>();
 
     public Game() {
     }

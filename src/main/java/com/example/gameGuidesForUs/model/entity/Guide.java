@@ -3,6 +3,7 @@ package com.example.gameGuidesForUs.model.entity;
 import javax.persistence.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ public class Guide extends BaseEntity {
     private User guideCreatedBy;
     private Instant createdOn;
     private Instant modifiedOn;
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     public Guide() {
     }
