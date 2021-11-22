@@ -28,7 +28,7 @@ spring:
             max-request-size: 10MB
     sql:
         init:
-            mode: always
+            mode: never
 
 #Cloudinary Properties
 #cloudinary:

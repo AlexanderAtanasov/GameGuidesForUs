@@ -31,7 +31,7 @@ public class Game extends BaseEntity {
         return this;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     public String getGameDescription() {
         return gameDescription;
     }

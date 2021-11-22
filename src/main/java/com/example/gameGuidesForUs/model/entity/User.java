@@ -83,7 +83,7 @@ public class User extends BaseEntity{
         return this;
     }
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     public Set<UserRoleEntity> getRoles() {
         return roles;
     }

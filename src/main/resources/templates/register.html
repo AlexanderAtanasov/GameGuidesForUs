@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+<header th:replace="fragments/commons::navigation"></header>
+<main role="main">
+    <div class="jumbotron">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header container">
+                    <h3>Register User</h3>
+                </div>
+                <div class="card-body">
+                    <form th:object="${userRegistrationBindingModel}"
+                          th:method="POST"
+                          th:action="@{/users/register}">
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input th:field="*{username}"
+                                   th:errorclass="is-invalid"
+                                   type="text" minlength="3" maxlength="20" class="form-control"
+                                   id="username"
+                                   name="username"
+                                   aria-describedby="usernameHelpInline" placeholder="Username">
+                            <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" id="usernameHelpInline"
+                                   class="invalid-feedback bg-danger text-light rounded text-center">
+                                Username length must be between 3 and 20 characters.
+                            </small>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input th:field="*{firstName}"
+                                   th:errorclass="is-invalid"
+                                   type="text" minlength="3" maxlength="20" class="form-control"
+                                   placeholder="First Name"/>
+                            <small
+                                    id="firstNameHelpInline"
+                                    class="invalid-feedback bg-danger text-light rounded text-center">
+                                Username length must be between 3 and 20 characters.
+                            </small>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input th:field="*{lastName}"
+                                   th:errorclass="is-invalid"
+                                   type="text" minlength="3" maxlength="20" class="form-control"
+                                   placeholder="Last Name"/>
+                            <small
+                                    id="lastNameHelpInline"
+                                    class="invalid-feedback bg-danger text-light rounded text-center">
+                                Username length must be between 3 and 20 characters.
+                            </small>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input th:field="*{password}"
+                                   th:errorclass="is-invalid"
+                                   type="password" minlength="3" maxlength="20" class="form-control"
+                                   placeholder="Password"/>
+                            <small
+                                    id="passwordHelpInline"
+                                    class="invalid-feedback bg-danger text-light rounded text-center">
+                                Password length must be between 3 and 20 characters.
+                            </small>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input th:field="*{confirmPassword}"
+                                   th:errorclass="is-invalid"
+                                   type="password" minlength="3" maxlength="20" class="form-control"
+                                   placeholder="Password"/>
+                            <small
+                                    id="confirmPasswordHelpInline"
+                                    class="invalid-feedback bg-danger text-light rounded text-center">
+                                Password length must be between 3 and 20 characters.
+                            </small>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input th:field="*{email}"
+                                   th:errorclass="is-invalid"
+                                   type="text" id="email" class="form-control"
+                                   aria-describedby="emailHelpInline" placeholder="email@example.com"/>
+                            <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                   id="emailHelpInline"
+                                    class="invalid-feedback bg-danger text-light rounded  text-center ">
+                                Enter valid email address.
+                            </small>
+                        </div>
+                        <div class="form-group log_btn">
+                            <input type="submit" value="Create Account" class="btn register_btn">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

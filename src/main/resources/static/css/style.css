@@ -14,3 +14,68 @@ body {
     background-color: rgba(0, 0, 0, 0.7); /* Black w/opacity/see-through */
 }
 
+.container{
+    height: 100%;
+    align-content: center;
+    text-align: center;
+}
+
+.card{
+    height: 325px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0,0,0,0) ;
+}
+
+
+.card-header h3{
+    color: white;
+}
+
+.input-group-prepend span{
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border:0;
+}
+
+
+
+.login_btn{
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+}
+
+.login_btn:hover{
+    color: black;
+    background-color: white;
+}
+
+.register_btn{
+    color: black;
+    background-color: #FFC312;
+    width: 150px;
+}
+
+.register_btn:hover{
+    color: black;
+    background-color: white;
+}
+
+.links{
+    color: white;
+}
+
+.links a{
+    margin-left: 4px;
+}
+
+.form-group.log_btn{
+    text-align: center;
+    width:50%;
+    margin-left:25%;
+    margin-right:25%;
+}
+
