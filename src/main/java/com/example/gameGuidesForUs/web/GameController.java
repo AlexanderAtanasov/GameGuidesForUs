@@ -1,25 +1,32 @@
 package com.example.gameGuidesForUs.web;
 
 import com.example.gameGuidesForUs.model.binding.GameAddBindingModel;
-import com.example.gameGuidesForUs.model.binding.UserRegistrationBindingModel;
+import com.example.gameGuidesForUs.service.GameService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
+@RequestMapping("/games")
 public class GameController {
+
+    private final GameService gameService;
+
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
+    }
 
     @ModelAttribute
     public GameAddBindingModel gameAddBindingModel() {
         return new GameAddBindingModel();
     }
 
-    @GetMapping("/games/add")
+    @GetMapping("/add")
     public String gameAdd() {
         return "game-add";
     }
@@ -36,7 +43,26 @@ public class GameController {
             return "redirect:game-add";
         }
 
+        return "redirect:/";
+    }
 
-        return "redirect:games";
+    @GetMapping("/all")
+    public String viewGames(Model model) {
+        model.addAttribute("totalGames", gameService.getTotalGameCount());
+        model.addAttribute("allGamesPreview", gameService.findAllGamesSortByReleaseDateDesc());
+        return "games";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String gameDelete(@PathVariable Long id) {
+        gameService.deleteGame(id);
+
+        return "redirect:/games/all";
+    }
+
+    @PatchMapping("/update/{id}")
+    public String gameUpdate(@PathVariable Long id) {
+
+        return "redirect:/games/all";
     }
 }

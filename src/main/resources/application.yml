@@ -32,6 +32,6 @@ spring:
 
 #Cloudinary Properties
 #cloudinary:
-#    api-key:
-#    api-secret:
-#    cloud-name:
+#    api-key: 313879687618881
+#    api-secret: ${CLOUDINARY_API_SECRET}
+#    cloud-name: alexat92

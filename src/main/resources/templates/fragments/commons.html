@@ -39,6 +39,9 @@
                     <a class="nav-link text-white" th:href="@{/users/register}">Register</a>
                 </li>
                 <li class="nav-item" >
+                    <a class="nav-link text-white" th:href="@{/games/all}">Browse Games</a>
+                </li>
+                <li class="nav-item" >
                     <a class="nav-link text-white" th:href="@{/guides/all}">Browse Guides</a>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
