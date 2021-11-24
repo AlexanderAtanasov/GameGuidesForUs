@@ -4,6 +4,7 @@ import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -31,7 +32,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/users/login", "users/register").anonymous()
-                .antMatchers("/games/add").hasRole(UserRoleEnum.ADMIN.name()) //TODO ADD ERROR PAGE FOR UNAUTHORIZED USERS + BACK TO GAMES LINK
+                .antMatchers(HttpMethod.GET,"/games/**/update","/games/add").hasRole(UserRoleEnum.ADMIN.name()) //TODO ADD ERROR PAGE FOR UNAUTHORIZED USERS + BACK TO GAMES LINK
                 .and()
                 .formLogin()
                 .loginPage("/users/login")
