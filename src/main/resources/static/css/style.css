@@ -64,6 +64,17 @@ body {
     background-color: white;
 }
 
+
+.add_game_btn{
+    color: black;
+    background-color: #FFC312;
+    width: 150px;
+}
+
+.add_game_btn:hover{
+    color: black;
+    background-color: white;
+}
 .links{
     color: white;
 }

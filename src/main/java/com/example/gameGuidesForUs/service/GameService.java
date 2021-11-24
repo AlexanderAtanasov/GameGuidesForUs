@@ -12,4 +12,6 @@ public interface GameService {
     List<GameViewModel> findAllGamesSortByReleaseDateDesc();
 
     void deleteGame(Long id);
+
+    boolean isGameTitleFree(String gameTitle);
 }

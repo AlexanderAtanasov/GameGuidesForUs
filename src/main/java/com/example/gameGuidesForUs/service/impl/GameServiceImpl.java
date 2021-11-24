@@ -38,4 +38,9 @@ public class GameServiceImpl implements GameService {
     public void deleteGame(Long id) {
         gameRepository.deleteById(id);
     }
+
+    @Override
+    public boolean isGameTitleFree(String gameTitle) {
+        return gameRepository.findByGameTitle(gameTitle).isEmpty();
+    }
 }

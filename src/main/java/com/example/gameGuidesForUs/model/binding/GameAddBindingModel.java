@@ -1,6 +1,7 @@
 package com.example.gameGuidesForUs.model.binding;
 
 import com.example.gameGuidesForUs.model.entity.enums.GenreEnum;
+import com.example.gameGuidesForUs.model.validator.UniqueGameTitle;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
@@ -22,6 +23,7 @@ public class GameAddBindingModel {
 
     @NotBlank
     @Size(min = 3, max = 35, message = "Game title must be between 3 and 35 characters.")
+    @UniqueGameTitle
     public String getGameTitle() {
         return gameTitle;
     }
