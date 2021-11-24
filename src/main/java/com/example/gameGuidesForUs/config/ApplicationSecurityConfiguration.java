@@ -1,5 +1,6 @@
 package com.example.gameGuidesForUs.config;
 
+import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,7 +29,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/", "/users/login", "/users/register").permitAll().and()
+                .antMatchers("/").permitAll()
+                .antMatchers("/users/login", "users/register").anonymous()
+                .antMatchers("/games/add").hasRole(UserRoleEnum.ADMIN.name()) //TODO ADD ERROR PAGE FOR UNAUTHORIZED USERS + BACK TO GAMES LINK
+                .and()
                 .formLogin()
                 .loginPage("/users/login")
                 .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
@@ -39,6 +43,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/users/logout"))
                 .logoutSuccessUrl("/").deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
+
     }
 
     @Override

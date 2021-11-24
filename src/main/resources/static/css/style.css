@@ -79,3 +79,6 @@ body {
     margin-right:25%;
 }
 
+.input-group-prepend {
+    width: 42px;
+}

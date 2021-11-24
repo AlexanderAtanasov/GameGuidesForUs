@@ -4,6 +4,7 @@ import com.example.gameGuidesForUs.model.binding.UserRegistrationBindingModel;
 import com.example.gameGuidesForUs.model.service.UserRegistrationServiceModel;
 import com.example.gameGuidesForUs.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+
     @GetMapping("/login")
     public String log() {
         return "login";
@@ -52,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register() {
         return "register";
     }
 
