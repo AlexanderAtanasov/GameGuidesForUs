@@ -30,14 +30,14 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     <a type="button" class="btn btn-sm btn-outline-secondary text-white"
-                       th:href="@{/games/view/{id}(id= *{id})}">View More</a>
+                       th:href="@{/games/{id}/view/(id= *{id})}">View More</a>
                 </div>
                 <th:block sec:authorize="hasRole('ADMIN')">
                     <div class="btn-group">
                         <a type="button" class="btn btn-sm btn-outline-secondary text-white"
-                           th:href="@{/games/update/{id}(id= *{id})}">Update</a>
+                           th:href="@{/games/{id}/update/(id= *{id})}">Update</a>
                     </div>
-                        <form th:action="@{/games/delete/{id}(id=*{id})}" th:method="delete">
+                        <form th:action="@{/games/{id}/delete/(id=*{id})}" th:method="delete">
                             <input type="submit" class="btn btn-sm btn-outline-secondary text-white" value="Delete"/>
                         </form>
                     </th:block>

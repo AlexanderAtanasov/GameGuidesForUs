@@ -53,14 +53,14 @@ public class GameController {
         return "games";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}/delete/")
     public String gameDelete(@PathVariable Long id) {
         gameService.deleteGame(id);
 
         return "redirect:/games/all";
     }
 
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}/update/")
     public String gameUpdate(@PathVariable Long id) {
 
         return "redirect:/games/all";
