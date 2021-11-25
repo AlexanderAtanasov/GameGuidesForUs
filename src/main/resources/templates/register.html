@@ -26,7 +26,8 @@
                                    id="username"
                                    name="username"
                                    aria-describedby="usernameHelpInline" placeholder="Username">
-                            <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" id="usernameHelpInline"
+                            <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                   id="usernameHelpInline"
                                    class="invalid-feedback bg-danger text-light rounded text-center">
                                 Username length must be between 3 and 20 characters.
                             </small>
@@ -97,7 +98,7 @@
                                    aria-describedby="emailHelpInline" placeholder="email@example.com"/>
                             <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                    id="emailHelpInline"
-                                    class="invalid-feedback bg-danger text-light rounded  text-center ">
+                                   class="invalid-feedback bg-danger text-light rounded  text-center ">
                                 Enter valid email address.
                             </small>
                         </div>

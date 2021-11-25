@@ -37,6 +37,9 @@
                         <a type="button" class="btn btn-sm btn-outline-secondary text-white"
                            th:href="@{/games/{id}/update/(id= *{id})}">Update</a>
                     </div>
+<!--                    <form th:action="@{/games/{id}/update/(id=*{id})}" th:method="patch">-->
+<!--                        <input type="submit" class="btn btn-sm btn-outline-secondary text-white" value="Update"/>-->
+<!--                    </form>-->
                         <form th:action="@{/games/{id}/delete/(id=*{id})}" th:method="delete">
                             <input type="submit" class="btn btn-sm btn-outline-secondary text-white" value="Delete"/>
                         </form>

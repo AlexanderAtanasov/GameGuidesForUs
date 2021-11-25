@@ -1,5 +1,6 @@
 package com.example.gameGuidesForUs.service;
 
+import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
 import com.example.gameGuidesForUs.model.view.GameViewModel;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface GameService {
     void deleteGame(Long id);
 
     boolean isGameTitleFree(String gameTitle);
+
+    void addGame(GameAddServiceModel gameAddServiceModel);
 }

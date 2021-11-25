@@ -41,7 +41,7 @@ public class UserRegistrationBindingModel {
     }
 
 
-    @NotBlank
+    @NotBlank(message = "Username cannot be blank.")
     @UniqueUsername
     @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters.")
     public String getUsername() {
@@ -75,7 +75,7 @@ public class UserRegistrationBindingModel {
         return this;
     }
 
-    @NotBlank
+    @NotBlank(message = "Email address cannot be blank.")
     @UniqueEmail
     @Email(message = "Enter valid email address.")
     public String getEmail() {

@@ -10,7 +10,7 @@ import javax.validation.Payload;
 
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueUserNameValidator.class)
+@Constraint(validatedBy = UniqueGameTitleValidator.class)
 
 public @interface UniqueGameTitle {
 

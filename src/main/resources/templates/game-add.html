@@ -10,11 +10,11 @@
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header container">
-                    <h3>Register User</h3>
+                    <h3>Add Game</h3>
                 </div>
                 <div class="card-body">
                     <form th:object="${gameAddBindingModel}"
-                          th:method="post"
+                          th:method="POST"
                           th:action="@{/games/add}">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
@@ -23,11 +23,11 @@
                             <input th:field="*{gameTitle}"
                                    th:errorclass="is-invalid"
                                    type="text" minlength="3" maxlength="35" class="form-control"
-                                   id="username"
-                                   name="username"
+                                   id="gameTitle"
+                                   name="gameTitle"
                                    aria-describedby="gameTitleHelpInline" placeholder="Game Title">
                             <small th:if="${#fields.hasErrors('gameTitle')}" th:errors="*{gameTitle}"
-                                   id="usernameHelpInline"
+                                   id="gameTitleHelpInline"
                                    class="invalid-feedback bg-danger text-light rounded text-center">
                                 Game title must be between 3 and 35 characters.
                             </small>
@@ -49,62 +49,33 @@
                                 You must select the category.
                             </small>
                         </div>
-<!--                        <div class="input-group form-group">-->
-<!--                            <div class="input-group-prepend">-->
-<!--                                <span class="input-group-text"><i class="fas fa-user "></i></span>-->
-<!--                            </div>-->
-<!--                            <input th:field="*{lastName}"-->
-<!--                                   th:errorclass="is-invalid"-->
-<!--                                   type="text" minlength="3" maxlength="20" class="form-control"-->
-<!--                                   placeholder="Last Name"/>-->
-<!--                            <small-->
-<!--                                    id="lastNameHelpInline"-->
-<!--                                    class="invalid-feedback bg-danger text-light rounded text-center">-->
-<!--                                Username length must be between 3 and 20 characters.-->
-<!--                            </small>-->
-<!--                        </div>-->
-<!--                        <div class="input-group form-group">-->
-<!--                            <div class="input-group-prepend">-->
-<!--                                <span class="input-group-text"><i class="fas fa-key"></i></span>-->
-<!--                            </div>-->
-<!--                            <input th:field="*{password}"-->
-<!--                                   th:errorclass="is-invalid"-->
-<!--                                   type="password" minlength="3" maxlength="20" class="form-control"-->
-<!--                                   placeholder="Password"/>-->
-<!--                            <small-->
-<!--                                    id="passwordHelpInline"-->
-<!--                                    class="invalid-feedback bg-danger text-light rounded text-center">-->
-<!--                                Password length must be between 3 and 20 characters.-->
-<!--                            </small>-->
-<!--                        </div>-->
-<!--                        <div class="input-group form-group">-->
-<!--                            <div class="input-group-prepend">-->
-<!--                                <span class="input-group-text"><i class="fas fa-key"></i></span>-->
-<!--                            </div>-->
-<!--                            <input th:field="*{confirmPassword}"-->
-<!--                                   th:errorclass="is-invalid"-->
-<!--                                   type="password" minlength="3" maxlength="20" class="form-control"-->
-<!--                                   placeholder="Confirm Password"/>-->
-<!--                            <small-->
-<!--                                    id="confirmPasswordHelpInline"-->
-<!--                                    class="invalid-feedback bg-danger text-light rounded text-center">-->
-<!--                                Password length must be between 3 and 20 characters.-->
-<!--                            </small>-->
-<!--                        </div>-->
-<!--                        <div class="input-group form-group">-->
-<!--                            <div class="input-group-prepend">-->
-<!--                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>-->
-<!--                            </div>-->
-<!--                            <input th:field="*{email}"-->
-<!--                                   th:errorclass="is-invalid"-->
-<!--                                   type="text" id="email" class="form-control"-->
-<!--                                   aria-describedby="emailHelpInline" placeholder="email@example.com"/>-->
-<!--                            <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"-->
-<!--                                   id="emailHelpInline"-->
-<!--                                   class="invalid-feedback bg-danger text-light rounded  text-center ">-->
-<!--                                Enter valid email address.-->
-<!--                            </small>-->
-<!--                        </div>-->
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input th:field="*{releasedOn}"
+                                   th:errorclass="is-invalid"
+                                   type="date" class="form-control"
+                                   id="releasedOn"
+                                   name="releasedOn"
+                                   aria-describedby="releasedOnHelpInline" placeholder="Game Title">
+                            <small id="usernameHelpInline"
+                                   class="invalid-feedback bg-danger text-light rounded text-center">
+                                Date should not be in the future.
+                            </small>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group form-group">
+                                <textarea th:field="*{gameDescription}"
+                                          th:errorclass="is-invalid"
+                                          class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3"
+                                          placeholder="Add Game Description here..."></textarea>
+                                <small id="gameDescriptionHelpInline"
+                                       class="invalid-feedback bg-danger text-light rounded text-center">
+                                    Game description must be more than 15 characters.
+                                </small>
+                            </div>
+                        </div>
                         <div class="form-group log_btn">
                             <input type="submit" value="Add Game" class="btn add_game_btn">
                         </div>

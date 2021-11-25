@@ -62,7 +62,6 @@ public class Game extends BaseEntity {
         return this;
     }
 
-    @Column(columnDefinition = "TEXT")
     public String getGameScreenshotUrl() {
         return gameScreenshotUrl;
     }

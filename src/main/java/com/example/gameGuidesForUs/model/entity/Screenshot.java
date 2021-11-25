@@ -7,7 +7,7 @@ import java.time.Instant;
 @Table(name = "screenshots")
 public class Screenshot extends BaseEntity{
 
-    private String title;
+
     private String url;
     private String publicId;
     private User uploadedBy;
@@ -16,15 +16,6 @@ public class Screenshot extends BaseEntity{
     public Screenshot() {
     }
 
-    @Column(nullable = false, unique = true)
-    public String getTitle() {
-        return title;
-    }
-
-    public Screenshot setTitle(String title) {
-        this.title = title;
-        return this;
-    }
     @Column(nullable = false, columnDefinition = "TEXT")
     public String getUrl() {
         return url;

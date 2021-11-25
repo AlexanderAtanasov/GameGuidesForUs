@@ -1,5 +1,7 @@
 package com.example.gameGuidesForUs.service.impl;
 
+import com.example.gameGuidesForUs.model.entity.Game;
+import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
 import com.example.gameGuidesForUs.model.view.GameViewModel;
 import com.example.gameGuidesForUs.repository.GameRepository;
 import com.example.gameGuidesForUs.service.GameService;
@@ -42,5 +44,15 @@ public class GameServiceImpl implements GameService {
     @Override
     public boolean isGameTitleFree(String gameTitle) {
         return gameRepository.findByGameTitle(gameTitle).isEmpty();
+    }
+
+    @Override
+    public void addGame(GameAddServiceModel gameAddServiceModel) {
+        Game newGame = modelMapper.map(gameAddServiceModel, Game.class);
+        gameRepository.save(newGame);
+
+
+
+        //todo try to get ID so you could attach screenshot to it.
     }
 }

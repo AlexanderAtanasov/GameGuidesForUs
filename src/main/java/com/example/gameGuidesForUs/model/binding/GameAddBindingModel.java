@@ -1,5 +1,6 @@
 package com.example.gameGuidesForUs.model.binding;
 
+import com.example.gameGuidesForUs.model.entity.Screenshot;
 import com.example.gameGuidesForUs.model.entity.enums.GenreEnum;
 import com.example.gameGuidesForUs.model.validator.UniqueGameTitle;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,13 +16,12 @@ public class GameAddBindingModel {
     private String gameTitle;
     private GenreEnum genre;
     private String gameDescription;
-    private String gameScreenshotUrl;
     private LocalDate releasedOn;
 
     public GameAddBindingModel() {
     }
 
-    @NotBlank
+    @NotBlank(message = "Game Title cannot be blank.")
     @Size(min = 3, max = 35, message = "Game title must be between 3 and 35 characters.")
     @UniqueGameTitle
     public String getGameTitle() {
@@ -33,7 +33,7 @@ public class GameAddBindingModel {
         return this;
     }
 
-    @NotBlank
+    @NotNull
     public GenreEnum getGenre() {
         return genre;
     }
@@ -54,18 +54,10 @@ public class GameAddBindingModel {
         return this;
     }
 
-    public String getGameScreenshotUrl() {
-        return gameScreenshotUrl;
-    }
-
-    public GameAddBindingModel setGameScreenshotUrl(String gameScreenshotUrl) {
-        this.gameScreenshotUrl = gameScreenshotUrl;
-        return this;
-    }
 
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotBlank
+    @NotNull
     public LocalDate getReleasedOn() {
         return releasedOn;
     }
