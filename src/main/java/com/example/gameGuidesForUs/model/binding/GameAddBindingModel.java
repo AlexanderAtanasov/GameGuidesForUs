@@ -1,14 +1,11 @@
 package com.example.gameGuidesForUs.model.binding;
 
-import com.example.gameGuidesForUs.model.entity.Screenshot;
 import com.example.gameGuidesForUs.model.entity.enums.GenreEnum;
 import com.example.gameGuidesForUs.model.validator.UniqueGameTitle;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class GameAddBindingModel {
@@ -17,6 +14,7 @@ public class GameAddBindingModel {
     private GenreEnum genre;
     private String gameDescription;
     private LocalDate releasedOn;
+    private MultipartFile screenshotUrl;
 
     public GameAddBindingModel() {
     }
@@ -67,4 +65,14 @@ public class GameAddBindingModel {
         return this;
     }
 
+
+    @NotNull(message = "Add screenshot.")
+    public MultipartFile getScreenshotUrl() {
+        return screenshotUrl;
+    }
+
+    public GameAddBindingModel setScreenshotUrl(MultipartFile screenshotUrl) {
+        this.screenshotUrl = screenshotUrl;
+        return this;
+    }
 }

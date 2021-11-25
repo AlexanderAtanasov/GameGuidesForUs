@@ -15,7 +15,8 @@
                 <div class="card-body">
                     <form th:object="${gameAddBindingModel}"
                           th:method="POST"
-                          th:action="@{/games/add}">
+                          th:action="@{/games/add}"
+                          enctype="multipart/form-data">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -65,6 +66,18 @@
                             </small>
                         </div>
                         <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                            </div>
+                            <input th:field="*{screenshotUrl}"
+                                   th:errorclass="is-invalid"
+                                   class="form-control" type="file" id="formFile">
+                        </div>
+                        <small id="screenshotUrl"
+                               class="invalid-feedback bg-danger text-light rounded text-center">
+                            Add screenshot.
+                        </small>
+                        <div class="input-group form-group">
                             <div class="input-group form-group">
                                 <textarea th:field="*{gameDescription}"
                                           th:errorclass="is-invalid"
@@ -76,6 +89,7 @@
                                 </small>
                             </div>
                         </div>
+
                         <div class="form-group log_btn">
                             <input type="submit" value="Add Game" class="btn add_game_btn">
                         </div>

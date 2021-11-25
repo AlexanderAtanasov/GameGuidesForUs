@@ -3,6 +3,7 @@ package com.example.gameGuidesForUs.web;
 import com.example.gameGuidesForUs.model.binding.GameAddBindingModel;
 import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
 import com.example.gameGuidesForUs.service.GameService;
+import com.example.gameGuidesForUs.service.cloudinary.CloudinaryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/games")
@@ -18,11 +20,13 @@ public class GameController {
 
     private final GameService gameService;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
 
 
-    public GameController(GameService gameService, ModelMapper modelMapper) {
+    public GameController(GameService gameService, ModelMapper modelMapper, CloudinaryService cloudinaryService) {
         this.gameService = gameService;
         this.modelMapper = modelMapper;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @ModelAttribute
@@ -43,7 +47,7 @@ public class GameController {
     @PostMapping("/add")
     public String gameAddConfirm(@Valid GameAddBindingModel gameAddBindingModel,
                                  BindingResult bindingResult,
-                                 RedirectAttributes redirectAttributes) {
+                                 RedirectAttributes redirectAttributes) throws IOException {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("gameAddBindingModel", gameAddBindingModel)
@@ -51,10 +55,15 @@ public class GameController {
                             bindingResult);
             return "redirect:/games/add";
         }
-        gameService.addGame(modelMapper.map(gameAddBindingModel, GameAddServiceModel.class));
-        //todo FINISH GAMEADD AND GAMEUPDATE
+        String screenshotUrl = cloudinaryService.upload(gameAddBindingModel.getScreenshotUrl()).getUrl();
 
-        return "redirect:/";
+        GameAddServiceModel gameAddServiceModel = modelMapper.map(gameAddBindingModel, GameAddServiceModel.class);
+        gameAddServiceModel.setGameScreenshotUrl(screenshotUrl);
+
+        gameService.addGame(gameAddServiceModel);
+        //todo  GAMEUPDATE
+
+        return "redirect:/games/all";
     }
 
     @GetMapping("/all")
