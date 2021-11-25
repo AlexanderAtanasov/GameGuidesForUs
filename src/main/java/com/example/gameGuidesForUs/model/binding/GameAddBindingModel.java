@@ -66,7 +66,6 @@ public class GameAddBindingModel {
     }
 
 
-    @NotNull(message = "Add screenshot.")
     public MultipartFile getScreenshotUrl() {
         return screenshotUrl;
     }
