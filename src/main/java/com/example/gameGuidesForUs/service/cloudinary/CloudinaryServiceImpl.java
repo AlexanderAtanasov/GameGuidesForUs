@@ -47,6 +47,13 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
     @Override
     public boolean delete(String publicId) {
-        return false;
-    } //todo finish delete cloudinary screenshot
+        try {
+            this.cloudinary.uploader().destroy(publicId, Map.of());
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+
+    }
+
 }

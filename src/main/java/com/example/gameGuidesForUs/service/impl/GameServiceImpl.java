@@ -51,8 +51,15 @@ public class GameServiceImpl implements GameService {
         Game newGame = modelMapper.map(gameAddServiceModel, Game.class);
         gameRepository.save(newGame);
 
+    }
 
+    @Override
+    public String findGameScreenshotId(Long id) {
+        String screenshotCloudinaryID = gameRepository.findById(id).orElse(null).getGameScreenshotUrl();
+        screenshotCloudinaryID = screenshotCloudinaryID
+                .substring(screenshotCloudinaryID.lastIndexOf("/") + 1,
+                        screenshotCloudinaryID.lastIndexOf("."));
 
-        //todo try to get ID so you could attach screenshot to it.
+        return screenshotCloudinaryID;
     }
 }

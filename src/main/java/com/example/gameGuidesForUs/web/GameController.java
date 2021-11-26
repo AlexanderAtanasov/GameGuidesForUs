@@ -59,10 +59,7 @@ public class GameController {
 
         GameAddServiceModel gameAddServiceModel = modelMapper.map(gameAddBindingModel, GameAddServiceModel.class);
         gameAddServiceModel.setGameScreenshotUrl(screenshotUrl);
-
         gameService.addGame(gameAddServiceModel);
-        //todo  GAMEUPDATE
-
         return "redirect:/games/all";
     }
 
@@ -75,7 +72,10 @@ public class GameController {
 
     @DeleteMapping("/{id}/delete/")
     public String gameDelete(@PathVariable Long id) {
+
+        cloudinaryService.delete(gameService.findGameScreenshotId(id));
         gameService.deleteGame(id);
+
         return "redirect:/games/all";
     }
 

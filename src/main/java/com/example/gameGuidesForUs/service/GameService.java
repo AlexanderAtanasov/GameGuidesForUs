@@ -17,4 +17,6 @@ public interface GameService {
     boolean isGameTitleFree(String gameTitle);
 
     void addGame(GameAddServiceModel gameAddServiceModel);
+
+    String findGameScreenshotId(Long id);
 }
