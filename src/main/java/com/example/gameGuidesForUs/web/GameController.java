@@ -1,6 +1,7 @@
 package com.example.gameGuidesForUs.web;
 
 import com.example.gameGuidesForUs.model.binding.GameAddBindingModel;
+import com.example.gameGuidesForUs.model.binding.GameUpdateBindingModel;
 import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
 import com.example.gameGuidesForUs.service.GameService;
 import com.example.gameGuidesForUs.service.cloudinary.CloudinaryService;
@@ -72,11 +73,15 @@ public class GameController {
 
     @DeleteMapping("/{id}/delete/")
     public String gameDelete(@PathVariable Long id) {
-
         cloudinaryService.delete(gameService.findGameScreenshotId(id));
         gameService.deleteGame(id);
-
         return "redirect:/games/all";
+    }
+
+
+    @ModelAttribute
+    public GameUpdateBindingModel gameUpdateBindingModel() {
+        return new GameUpdateBindingModel();
     }
 
     @GetMapping("/{id}/update/")

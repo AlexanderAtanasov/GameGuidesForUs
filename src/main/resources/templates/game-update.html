@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
 </head>
 <body>
+<header th:replace="fragments/commons::navigation"></header>
+<main role="main">
+    <div class="jumbotron">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header container ">
+                    <h3>Update Game</h3>
+                </div>
+                <div class="card-body">
+                    <form th:object="${gameAddBindingModel}"
+                          th:method="POST"
+                          th:action="@{/games/add}"
+                          >
 
+
+
+
+
+
+
+
+
+
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+</main>
+
+<footer th:replace="fragments/commons::footer"></footer>
 </body>
 </html>
