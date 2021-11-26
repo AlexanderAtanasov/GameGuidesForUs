@@ -62,4 +62,11 @@ public class GameServiceImpl implements GameService {
 
         return screenshotCloudinaryID;
     }
+
+    @Override
+    public GameViewModel findGameInformationById(Long id) {
+        GameViewModel gameViewModel = modelMapper.map(gameRepository.findById(id).orElse(null), GameViewModel.class);
+        return gameViewModel;
+        //TODO RETURN 404 ERROR HANDLING
+    }
 }

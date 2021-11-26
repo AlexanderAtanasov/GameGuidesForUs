@@ -19,4 +19,6 @@ public interface GameService {
     void addGame(GameAddServiceModel gameAddServiceModel);
 
     String findGameScreenshotId(Long id);
+
+    GameViewModel findGameInformationById(Long id);
 }

@@ -36,11 +36,6 @@ public class GameController {
 
     @GetMapping("/add")
     public String gameAdd() {
-//        if (!model.containsAttribute("gameAddBindingModel")) {
-//            model.
-//                    addAttribute("gameAddBindingModel", gameAddBindingModel());
-//
-//        }
         return "game-add";
     }
 
@@ -68,6 +63,13 @@ public class GameController {
         model.addAttribute("totalGames", gameService.getTotalGameCount());
         model.addAttribute("allGamesPreview", gameService.findAllGamesSortByReleaseDateDesc());
         return "games";
+    }
+
+    @GetMapping("/{id}/view/")
+    public String gameView(@PathVariable Long id, Model model) {
+
+        model.addAttribute("gameInformation",gameService.findGameInformationById(id));
+        return "game-view";
     }
 
     @DeleteMapping("/{id}/delete/")
