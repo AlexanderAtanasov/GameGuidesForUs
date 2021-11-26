@@ -1,7 +1,6 @@
 package com.example.gameGuidesForUs.web;
 
 import com.example.gameGuidesForUs.model.binding.GameAddBindingModel;
-import com.example.gameGuidesForUs.model.binding.GameUpdateBindingModel;
 import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
 import com.example.gameGuidesForUs.service.GameService;
 import com.example.gameGuidesForUs.service.cloudinary.CloudinaryService;
@@ -79,20 +78,5 @@ public class GameController {
     }
 
 
-    @ModelAttribute
-    public GameUpdateBindingModel gameUpdateBindingModel() {
-        return new GameUpdateBindingModel();
-    }
 
-    @GetMapping("/{id}/update/")
-    public String gameUpdate(@PathVariable Long id) {
-//TODO
-        return "game-update";
-    }
-
-    @PatchMapping("/{id}/update/")
-    public String gameUpdateConfirm(@PathVariable Long id) {
-//TODO
-        return "redirect:/games/all";
-    }
 }
