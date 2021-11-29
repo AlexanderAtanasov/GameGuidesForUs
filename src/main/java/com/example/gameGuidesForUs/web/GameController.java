@@ -50,8 +50,6 @@ public class GameController {
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes) throws IOException {
 
-        boolean empty = gameAddBindingModel.getScreenshotUrl().isEmpty();
-
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("gameAddBindingModel", gameAddBindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.gameAddBindingModel",

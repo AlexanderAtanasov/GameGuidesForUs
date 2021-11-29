@@ -3,7 +3,10 @@ package com.example.gameGuidesForUs.model.entity;
 import javax.persistence.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,7 +17,6 @@ public class Guide extends BaseEntity {
     private String description;
     private User guideCreatedBy;
     private Instant createdOn;
-    private Instant modifiedOn;
     private List<Comment> comments = new ArrayList<>();
     private Game gameId;
 
@@ -71,14 +73,6 @@ public class Guide extends BaseEntity {
         return this;
     }
 
-    public Instant getModifiedOn() {
-        return modifiedOn;
-    }
-
-    public Guide setModifiedOn(Instant modifiedOn) {
-        this.modifiedOn = modifiedOn;
-        return this;
-    }
 
     @OneToMany
     public List<Comment> getComments() {
@@ -95,7 +89,5 @@ public class Guide extends BaseEntity {
         setCreatedOn(Instant.now());
     }
 
-    @PostPersist void onUpdate() {
-        setModifiedOn(Instant.now());
-    }
+
 }
