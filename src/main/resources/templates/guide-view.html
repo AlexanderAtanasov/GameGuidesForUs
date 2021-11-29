@@ -7,23 +7,7 @@
 <header th:replace="fragments/commons::navigation"></header>
 <main role="main">
     <div class="jumbotron">
-        <ul class="col-md-3 list-group mb-4 box-shadow col border"
-             th:each="g: ${listOfGuides}"
-             th:object="${g}">
-            <li class="card-text text-center text-white" th:text="|Game Title: *{guideTitle} - Created On: *{createdOn}|">
 
-<!--                <p class="list-group-item text-white" th:text="|Game Title: *{guideTitle} Created On: *{createdOn}|"></p>-->
-<!--                <p class="card-text border-bottom text-center text-white" th:text="|Created On: *{createdOn}|"></p>-->
-<!--                <p class="card-text border-bottom text-center text-white" th:if="*{modifiedOn!=null}" th:text="|Modified On: *{modifiedOn}|"></p>-->
-            </li>
-
-<!--            <div class="wrapper">-->
-<!--                <div class="btn-group">-->
-<!--                    <a type="button" class="btn btn-sm btn-outline-secondary text-white"-->
-<!--                       th:href="@{/guides/{id}/view/(id= *{id})}">Browse Guides</a>-->
-<!--                </div>-->
-<!--            </div>-->
-        </ul>
 
     </div>
 

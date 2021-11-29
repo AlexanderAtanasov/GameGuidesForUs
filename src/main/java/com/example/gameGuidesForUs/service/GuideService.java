@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface GuideService {
     List<GuideListViewModel> findAllGuidesForGivenGame(Long id);
+
+    boolean isGuideTitleFree(String guideTitle);
+
 }

@@ -38,7 +38,10 @@ public class GameController {
     }
 
     @GetMapping("/add")
-    public String gameAdd() {
+    public String gameAdd(Model model) {
+        if (!model.containsAttribute("emptyScreenshot")) {
+            model.addAttribute("emptyScreenshot", false);
+        }
         return "game-add";
     }
 
@@ -47,12 +50,23 @@ public class GameController {
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes) throws IOException {
 
+        boolean empty = gameAddBindingModel.getScreenshotUrl().isEmpty();
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("gameAddBindingModel", gameAddBindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.gameAddBindingModel",
                             bindingResult);
+            if (gameAddBindingModel.getScreenshotUrl().isEmpty()) {
+                redirectAttributes.addFlashAttribute("gameAddBindingModel", gameAddBindingModel)
+                        .addFlashAttribute("emptyScreenshot", true);
+            }
+
             return "redirect:/games/add";
         }
+
+
+
+
         String screenshotUrl = cloudinaryService.upload(gameAddBindingModel.getScreenshotUrl()).getUrl();
 
         GameAddServiceModel gameAddServiceModel = modelMapper.map(gameAddBindingModel, GameAddServiceModel.class);

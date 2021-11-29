@@ -10,7 +10,7 @@
     <div class="jumbotron"
          th:object="${gameInformation}">
         <div class="col gInfo">
-            <div class="col-md-3 card mb-4 box-shadow col border">
+            <div class="col-md-3 card mb-4 box-shadow col border mx-auto">
                 <a>
                     <img th:src="*{getGameScreenshotUrl()}  " class="card-img-top"
                          alt="Thumbnail [100%x225]"
@@ -19,7 +19,7 @@
                 </a>
 
             </div>
-            <div class="col-md-3 card mb-4 box-shadow col border">
+            <div class="col-md-3 card mb-4 box-shadow col border mx-auto">
                 <p class="card-text text-center border-bottom text-white"
                    th:utext="'&lt;strong&gt; Game Title: &lt;/strong&gt;'  + *{gameTitle}"></p>
                 <p class="card-text text-center border-bottom text-white"
@@ -30,6 +30,11 @@
                    th:utext="'&lt;strong&gt; Game Description: &lt;/strong&gt;'  + *{gameDescription}"></p>
             </div>
         </div>
+        <div class="btn-group font-weight-bold">
+            <a type="button" class="btn btn-sm btn-outline-secondary text-white"
+               th:href="@{/guide/{id}/add/(id= *{id})}">Add Guide</a>
+        </div>
+
         <div class="border bg-blur">
             <h3 class="text-white text-center ">Guides</h3>
             <div class="list-group box-shadow col border" th:each="g: ${listOfGuides}"

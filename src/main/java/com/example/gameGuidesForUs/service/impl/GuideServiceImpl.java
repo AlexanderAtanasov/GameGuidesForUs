@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,5 +31,10 @@ public class GuideServiceImpl implements GuideService {
                 .map(guide -> modelMapper.map(guide, GuideListViewModel.class))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public boolean isGuideTitleFree(String guideTitle) {
+        return guideRepository.findByGuideTitle(guideTitle).isEmpty();
     }
 }

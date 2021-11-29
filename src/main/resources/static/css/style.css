@@ -28,6 +28,16 @@ body {
     background-color: rgba(0, 0, 0, 0.7) ;
 }
 
+.footer{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.footer-p {
+    margin-bottom: 0 !important;
+}
 
 .card-header h3{
     color: white;

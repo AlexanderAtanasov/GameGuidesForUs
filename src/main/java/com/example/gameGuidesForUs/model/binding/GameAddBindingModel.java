@@ -66,6 +66,7 @@ public class GameAddBindingModel {
     }
 
 
+
     public MultipartFile getScreenshotUrl() {
         return screenshotUrl;
     }
