@@ -16,7 +16,17 @@ public class Game extends BaseEntity {
     private GenreEnum genre;
     private LocalDate releasedOn;
     private String gameScreenshotUrl;
+    private List<Guide> guides;
 
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL)
+    public List<Guide> getGuides() {
+        return guides;
+    }
+
+    public Game setGuides(List<Guide> guides) {
+        this.guides = guides;
+        return this;
+    }
 
     public Game() {
     }

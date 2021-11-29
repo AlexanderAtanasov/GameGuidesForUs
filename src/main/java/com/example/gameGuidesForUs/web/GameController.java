@@ -82,7 +82,6 @@ public class GameController {
 
     @GetMapping("/{id}/view/")
     public String gameView(@PathVariable Long id, Model model) {
-
         model.addAttribute("gameInformation",gameService.findGameInformationById(id));
         model.addAttribute("listOfGuides", guideService.findAllGuidesForGivenGame(id));
         return "game-view";
