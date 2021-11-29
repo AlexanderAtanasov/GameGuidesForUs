@@ -9,12 +9,12 @@
     <br>
     <h2 class="text-light border-bottom" th:text="|Current Games Count
         : ${totalGames}|"></h2>
-    <div class="row">
+    <div class="card-deck">
 
         <div class="col-md-3 card mb-4 box-shadow col border"
              th:each="g: ${allGamesPreview}"
              th:object="${g}">
-            <a>
+            <a th:href="@{/games/{id}/view/(id= *{id})}">
                 <img th:src="*{getGameScreenshotUrl()}  " class="card-img-top"
                      alt="Thumbnail [100%x225]"
                      data-holder-rendered="true"

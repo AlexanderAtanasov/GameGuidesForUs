@@ -16,6 +16,17 @@ public class Guide extends BaseEntity {
     private Instant createdOn;
     private Instant modifiedOn;
     private List<Comment> comments = new ArrayList<>();
+    private Game gameId;
+
+    @ManyToOne
+    public Game getGameId() {
+        return gameId;
+    }
+
+    public Guide setGameId(Game gameId) {
+        this.gameId = gameId;
+        return this;
+    }
 
     public Guide() {
     }

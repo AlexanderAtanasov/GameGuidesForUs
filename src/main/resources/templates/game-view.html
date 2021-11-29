@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+<header th:replace="fragments/commons::navigation"></header>
+<main role="main">
+
+    <div class="jumbotron"
+         th:object="${gameInformation}">
+        <div class="col gInfo">
+            <div class="col-md-3 card mb-4 box-shadow col border">
+                <a>
+                    <img th:src="*{getGameScreenshotUrl()}  " class="card-img-top"
+                         alt="Thumbnail [100%x225]"
+                         data-holder-rendered="true"
+                         style="height: 225px; width: 100%; display: block;">
+                </a>
+
+            </div>
+            <div class="col-md-3 card mb-4 box-shadow col border">
+                <p class="card-text text-center border-bottom text-white"
+                   th:utext="'&lt;strong&gt; Game Title: &lt;/strong&gt;'  + *{gameTitle}"></p>
+                <p class="card-text text-center border-bottom text-white"
+                   th:utext="'&lt;strong&gt; Genre: &lt;/strong&gt;'  + *{genre}"></p>
+                <p class="card-text text-center border-bottom text-white"
+                   th:utext="'&lt;strong&gt; Released On: &lt;/strong&gt;'  + *{releasedOn}"></p>
+                <p class="card-text text-center  text-white"
+                   th:utext="'&lt;strong&gt; Game Description: &lt;/strong&gt;'  + *{gameDescription}"></p>
+            </div>
+        </div>
+        <div class="border bg-blur">
+            <h3 class="text-white text-center ">Guides</h3>
+            <div class="list-group box-shadow col border" th:each="g: ${listOfGuides}"
+                 th:object="${g}">
+                <a th:href="@{/guide/{id}/view/(id= *{id})}"
+                   class="card-text text-white"
+                   th:utext="'&lt;strong&gt; Guide Title: &lt;/strong&gt;' + *{guideTitle} +
+'&lt;strong&gt; Created On: &lt;/strong&gt;' + *{createdOn}
++ '&lt;strong&gt; Created by: &lt;/strong&gt;' + *{guideCreatedBy.username}">
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

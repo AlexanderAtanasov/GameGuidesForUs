@@ -3,6 +3,7 @@ package com.example.gameGuidesForUs.web;
 import com.example.gameGuidesForUs.model.binding.GameAddBindingModel;
 import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
 import com.example.gameGuidesForUs.service.GameService;
+import com.example.gameGuidesForUs.service.GuideService;
 import com.example.gameGuidesForUs.service.cloudinary.CloudinaryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,14 @@ import java.io.IOException;
 public class GameController {
 
     private final GameService gameService;
+    private final GuideService guideService;
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
 
 
-    public GameController(GameService gameService, ModelMapper modelMapper, CloudinaryService cloudinaryService) {
+    public GameController(GameService gameService, GuideService guideService, ModelMapper modelMapper, CloudinaryService cloudinaryService) {
         this.gameService = gameService;
+        this.guideService = guideService;
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
     }
@@ -69,6 +72,7 @@ public class GameController {
     public String gameView(@PathVariable Long id, Model model) {
 
         model.addAttribute("gameInformation",gameService.findGameInformationById(id));
+        model.addAttribute("listOfGuides", guideService.findAllGuidesForGivenGame(id));
         return "game-view";
     }
 

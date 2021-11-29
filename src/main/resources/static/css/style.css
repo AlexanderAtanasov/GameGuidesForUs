@@ -25,7 +25,7 @@ body {
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;
-    background-color: rgba(0,0,0,0) ;
+    background-color: rgba(0, 0, 0, 0.7) ;
 }
 
 
@@ -39,7 +39,6 @@ body {
     color: black;
     border:0;
 }
-
 
 .login_btn{
     color: black;
@@ -91,4 +90,19 @@ body {
 
 .input-group-prepend {
     width: 42px;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+.button {
+    position: absolute;
+    top: 50%;
+}
+
+.gInfo {
+    height: 100%;
+    align-content: center;
+    text-align: center;
 }
