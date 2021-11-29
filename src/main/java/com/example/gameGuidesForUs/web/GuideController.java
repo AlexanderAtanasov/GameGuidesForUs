@@ -34,12 +34,12 @@ public class GuideController {
         return new GuideAddBindingModel();
     }
 
-    @GetMapping("/guides/{id}/add/")
+    @GetMapping("/guides/{id}/add")
     public String addGuide(@PathVariable Long id) {
         return "guide-add";
     }
 
-    @PostMapping("/guides/{id}/add/")
+    @PostMapping("/guides/{id}/add")
     public String addGuideConfirm(@PathVariable Long id,
                                   @Valid GuideAddBindingModel guideAddBindingModel,
                                   BindingResult bindingResult,
@@ -48,20 +48,20 @@ public class GuideController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("guideAddBindingModel", guideAddBindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.guideAddBindingModel", bindingResult);
-            return "redirect:/guides/{id}/add/";
+            return "redirect:/guides/{id}/add";
         }
 
         GuideAddServiceModel newGuide = modelMapper.map(guideAddBindingModel, GuideAddServiceModel.class);
 
         guideService.addGuide(newGuide, id, currentUser.getUserIdentifier());
-        return "redirect:/games/{id}/view/";
+        return "redirect:/games/{id}/view";
     }
 
-    @GetMapping("/guides/{id}/view/")
+    @GetMapping("/guides/{id}/view")
     public String viewGuide(@PathVariable Long id, Model model) {
         return "guide-view";
     }
 
 
-    //TODO GUIDE DELETE IF USER IS OWNER OR ADMIN
+    //TODO GUIDE DELETE IF USER IS OWNER OR ADMIN, implement in guide-view html
 }

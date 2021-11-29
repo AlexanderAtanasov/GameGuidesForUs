@@ -80,14 +80,14 @@ public class GameController {
         return "games";
     }
 
-    @GetMapping("/{id}/view/")
+    @GetMapping("/{id}/view")
     public String gameView(@PathVariable Long id, Model model) {
         model.addAttribute("gameInformation",gameService.findGameInformationById(id));
         model.addAttribute("listOfGuides", guideService.findAllGuidesForGivenGame(id));
         return "game-view";
     }
 
-    @DeleteMapping("/{id}/delete/")
+    @DeleteMapping("/{id}/delete")
     public String gameDelete(@PathVariable Long id) {
         cloudinaryService.delete(gameService.findGameScreenshotId(id));
         gameService.deleteGame(id);
