@@ -62,9 +62,6 @@ public class GameController {
             return "redirect:/games/add";
         }
 
-
-
-
         String screenshotUrl = cloudinaryService.upload(gameAddBindingModel.getScreenshotUrl()).getUrl();
 
         GameAddServiceModel gameAddServiceModel = modelMapper.map(gameAddBindingModel, GameAddServiceModel.class);

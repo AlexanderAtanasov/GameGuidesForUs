@@ -1,60 +1,54 @@
-package com.example.gameGuidesForUs.model.entity;
+package com.example.gameGuidesForUs.model.view;
 
-import javax.persistence.*;
+import com.example.gameGuidesForUs.model.entity.Guide;
+import com.example.gameGuidesForUs.model.entity.Screenshot;
+import com.example.gameGuidesForUs.model.entity.User;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "comments")
-public class Comment extends BaseEntity {
+public class CommentViewModel {
 
-    private Guide guide;
+    private Guide guideId;
     private String comment;
     private User commentCreatedBy;
     private Instant createdOn;
     private Instant modifiedOn;
     private List<Screenshot> screenshots = new ArrayList<>();
 
-    public Comment() {
+    public Guide getGuideId() {
+        return guideId;
     }
 
-    @ManyToOne
-    public Guide getGuide() {
-        return guide;
-    }
-
-    public Comment setGuide(Guide guideId) {
-        this.guide = guideId;
+    public CommentViewModel setGuideId(Guide guideId) {
+        this.guideId = guideId;
         return this;
     }
 
-    @Column(nullable = false, columnDefinition = "LONGTEXT")
     public String getComment() {
         return comment;
     }
 
-    public Comment setComment(String comment) {
+    public CommentViewModel setComment(String comment) {
         this.comment = comment;
         return this;
     }
 
-    @ManyToOne
     public User getCommentCreatedBy() {
         return commentCreatedBy;
     }
 
-    public Comment setCommentCreatedBy(User commentCreatedBy) {
+    public CommentViewModel setCommentCreatedBy(User commentCreatedBy) {
         this.commentCreatedBy = commentCreatedBy;
         return this;
     }
 
-    @Column(nullable = false)
     public Instant getCreatedOn() {
         return createdOn;
     }
 
-    public Comment setCreatedOn(Instant createdOn) {
+    public CommentViewModel setCreatedOn(Instant createdOn) {
         this.createdOn = createdOn;
         return this;
     }
@@ -63,28 +57,17 @@ public class Comment extends BaseEntity {
         return modifiedOn;
     }
 
-    public Comment setModifiedOn(Instant modifiedOn) {
+    public CommentViewModel setModifiedOn(Instant modifiedOn) {
         this.modifiedOn = modifiedOn;
         return this;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
     public List<Screenshot> getScreenshots() {
         return screenshots;
     }
 
-    public Comment setScreenshots(List<Screenshot> screenshots) {
+    public CommentViewModel setScreenshots(List<Screenshot> screenshots) {
         this.screenshots = screenshots;
         return this;
-    }
-
-
-    @PrePersist
-    public void beforeCreate() {
-        setCreatedOn(Instant.now());
-    }
-
-    @PostPersist void onUpdate() {
-        setModifiedOn(Instant.now());
     }
 }

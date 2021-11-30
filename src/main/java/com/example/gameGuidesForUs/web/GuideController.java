@@ -2,6 +2,7 @@ package com.example.gameGuidesForUs.web;
 
 import com.example.gameGuidesForUs.model.binding.GuideAddBindingModel;
 import com.example.gameGuidesForUs.model.service.GuideAddServiceModel;
+import com.example.gameGuidesForUs.model.view.GuideViewModel;
 import com.example.gameGuidesForUs.service.GuideService;
 import com.example.gameGuidesForUs.service.impl.OnlineUser;
 import org.modelmapper.ModelMapper;
@@ -59,9 +60,20 @@ public class GuideController {
 
     @GetMapping("/guides/{id}/view")
     public String viewGuide(@PathVariable Long id, Model model) {
+
+
+        model.addAttribute("currentGuide", guideService.findGuideById(id));
+        //TODO IMPLEMENT GUIDE VIEW MODEL
         return "guide-view";
     }
 
 
-    //TODO GUIDE DELETE IF USER IS OWNER OR ADMIN, implement in guide-view html
+    @DeleteMapping("guides/{id}/delete")
+    public String deleteGuide(@PathVariable Long id) {
+        //TODO GUIDE DELETE IF USER IS OWNER OR ADMIN, implement in guide-view html
+        // check if after deleting guide, the games is deleted as well and fix
+        return "redirect:/games/{id}/view";
+    }
+
+
 }

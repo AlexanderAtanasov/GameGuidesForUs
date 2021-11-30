@@ -42,10 +42,11 @@
                 <a th:href="@{/guides/{id}/view/(id= *{id})}"
                    class="card-text text-white"
                    th:utext="'&lt;strong&gt; Guide Title: &lt;/strong&gt;' + *{guideTitle} +
-'&lt;strong&gt; Created On: &lt;/strong&gt;' + *{createdOn}
+'&lt;strong&gt;  Created On: &lt;/strong&gt;' + *{#dates.format(createdOn, 'dd-MM-yyyy HH:mm:ss')}
 + '&lt;strong&gt; Created by: &lt;/strong&gt;' + *{guideCreatedBy.username}">
                 </a>
             </div>
+
 
         </div>
 
