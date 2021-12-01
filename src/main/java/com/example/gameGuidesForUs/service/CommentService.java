@@ -12,4 +12,6 @@ public interface CommentService {
 
 
     void addComment(CommentAddServiceModel commentAddServiceModel, Long guideId, String username);
+
+    void deleteComment(Long id);
 }

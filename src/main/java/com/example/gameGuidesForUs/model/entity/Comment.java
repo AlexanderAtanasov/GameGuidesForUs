@@ -19,7 +19,7 @@ public class Comment extends BaseEntity {
     public Comment() {
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     public Guide getGuide() {
         return guide;
     }
@@ -68,7 +68,7 @@ public class Comment extends BaseEntity {
     }
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     public Screenshot getScreenshot() {
         return screenshot;
     }
@@ -76,6 +76,10 @@ public class Comment extends BaseEntity {
     public Comment setScreenshot(Screenshot screenshot) {
         this.screenshot = screenshot;
         return this;
+    }
+
+    public boolean hasScreenshot() {
+        return screenshot.getId()==null;
     }
 
     @PrePersist

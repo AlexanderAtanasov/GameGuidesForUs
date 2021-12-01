@@ -7,8 +7,10 @@ import com.example.gameGuidesForUs.repository.CommentRepository;
 import com.example.gameGuidesForUs.repository.GuideRepository;
 import com.example.gameGuidesForUs.repository.UserRepository;
 import com.example.gameGuidesForUs.service.CommentService;
+import com.example.gameGuidesForUs.service.ScreenshotService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
@@ -21,12 +23,14 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final GuideRepository guideRepository;
     private final ModelMapper modelMapper;
+    private final ScreenshotService screenshotService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, UserRepository userRepository, GuideRepository guideRepository, ModelMapper modelMapper) {
+    public CommentServiceImpl(CommentRepository commentRepository, UserRepository userRepository, GuideRepository guideRepository, ModelMapper modelMapper, ScreenshotService screenshotService) {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
         this.guideRepository = guideRepository;
         this.modelMapper = modelMapper;
+        this.screenshotService = screenshotService;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.findAllByGuideIdOrderByCreatedOnDesc(id)
                 .stream().map(comment -> {
                     CommentViewModel c = modelMapper.map(comment, CommentViewModel.class);
-                    if(comment.getScreenshot() != null) {
+                    if (comment.getScreenshot() != null) {
                         c.setScreenshot(comment.getScreenshot().getUrl());
                     }
                     return c;
@@ -53,6 +57,22 @@ public class CommentServiceImpl implements CommentService {
                 .setCreatedOn(Instant.now());
 
         commentRepository.save(comment);
+    }
+
+    @Override
+    @Transactional
+    public void deleteComment(Long id) {
+
+        Comment forDeletion = commentRepository.getById(id);
+
+        if (forDeletion.getScreenshot() == null) {
+            commentRepository.deleteById(id);
+        } else {
+            Long screenshotId = commentRepository.getById(id).getScreenshot().getId();
+            commentRepository.deleteById(id);
+            screenshotService.deleteScreenshot(screenshotId);
+        }
+
     }
 
 

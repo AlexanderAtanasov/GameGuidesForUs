@@ -17,6 +17,7 @@ public class Guide extends BaseEntity {
     private Game gameId;
 
     @ManyToOne
+    @JoinColumn
     public Game getGameId() {
         return gameId;
     }
@@ -70,7 +71,7 @@ public class Guide extends BaseEntity {
     }
 
 
-    @OneToMany(mappedBy = "guide", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "guide", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Comment> getComments() {
         return comments;
     }

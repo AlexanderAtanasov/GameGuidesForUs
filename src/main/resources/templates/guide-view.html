@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -50,13 +50,14 @@
         <div class="container-fluid mt-100">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card mb-4" th:each="c : ${allCommentsForTheGuide}">
+                    <div class="card mb-4" th:each="c : ${allCommentsForTheGuide}"
+                    th:with="commentId=${c.id}">
                         <div class="card-header">
                             <div class="media flex-wrap w-100 align-items-center">
                                 <div class="card-text media-body ">
                                     <a
-                                       data-abc="true"
-                                       th:utext="*{c.commentCreatedBy.firstName} + ' ' +*{c.commentCreatedBy.lastName}">Creator</a>
+                                            data-abc="true"
+                                            th:utext="*{c.commentCreatedBy.firstName} + ' ' +*{c.commentCreatedBy.lastName}">Creator</a>
                                     <div class="text-muted small"
                                          th:text="|Comment created on: *{#dates.format(c.createdOn, 'dd-MM-yyyy HH:mm:ss')}|"></div>
                                 </div>
@@ -71,19 +72,30 @@
                             <p th:text="*{c.comment}"></p>
                             <div th:if="${c.screenshot !=null}">
                                 <a th:href="*{c.screenshot}">
-                                <img th:src="*{c.screenshot} " class="card-img-top"
-                                     alt="Thumbnail [100%x225]"
-                                     data-holder-rendered="true">
+                                    <img th:src="*{c.screenshot} " class="card-img-top"
+                                         alt="Thumbnail [100%x225]"
+                                         data-holder-rendered="true">
                                 </a>
                             </div>
-
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-center links">
+                                    <a href="/users/login">Update Comment</a>
+                                </div>
+                                <div class="d-flex justify-content-center links">
+                                    <th:block sec:authorize="hasRole('ADMIN')">
+                                        <form th:action="@{/comments/{guideId}/delete/{commentId}(guideId=*{id}, commentId=*{commentId})}" th:method="delete">
+                                            <input type="submit" class="btn btn-sm btn-outline-secondary text-dark" value="Delete Comment"/>
+                                        </form>
+                                    </th:block>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-<!--Comment adding section-->
+        <!--Comment adding section-->
         <th:block sec:authorize="isAuthenticated()">
             <div class="container-fluid mt-100">
                 <form th:object="${commentAddBindingModel}"
@@ -110,11 +122,11 @@
             </div>
         </th:block>
         <th:block sec:authorize="!isAuthenticated()">
-        <div class="card-footer">
-            <div class="d-flex justify-content-center links">
-               To add comment please <a href="/users/login" th:utext="'&nbsp;login.'"></a>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center links">
+                    To add comment please <a href="/users/login" th:utext="'&nbsp;login.'"></a>
+                </div>
             </div>
-        </div>
         </th:block>
     </div>
 

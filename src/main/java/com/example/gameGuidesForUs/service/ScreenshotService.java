@@ -8,4 +8,6 @@ import java.io.IOException;
 public interface ScreenshotService {
 
     Screenshot addScreenshot(MultipartFile screenshot, String userIdentifier) throws IOException;
+
+    void deleteScreenshot(Long screenshotId);
 }

@@ -40,4 +40,10 @@ public class ScreenshotServiceImpl implements ScreenshotService {
 
        return screenshotRepository.save(screenshot);
     }
+
+    @Override
+    public void deleteScreenshot(Long screenshotId) {
+        cloudinaryService.delete(screenshotRepository.findById(screenshotId).orElse(null).getPublicId());
+        screenshotRepository.deleteById(screenshotId);
+    }
 }
