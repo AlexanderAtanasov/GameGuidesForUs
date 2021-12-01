@@ -17,7 +17,6 @@ public class Guide extends BaseEntity {
     private Game gameId;
 
     @ManyToOne
-    @JoinColumn
     public Game getGameId() {
         return gameId;
     }
