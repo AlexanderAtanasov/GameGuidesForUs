@@ -19,7 +19,7 @@ public class Comment extends BaseEntity {
     public Comment() {
     }
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     public Guide getGuide() {
         return guide;
     }

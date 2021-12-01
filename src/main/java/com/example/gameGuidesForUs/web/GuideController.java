@@ -26,6 +26,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Controller
+@RequestMapping("/games")
 public class GuideController {
 
     private final GuideService guideService;
@@ -69,7 +70,7 @@ public class GuideController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("guideAddBindingModel", guideAddBindingModel)
                     .addFlashAttribute("org.springframework.validation.BindingResult.guideAddBindingModel", bindingResult);
-            return "redirect:/guides/{id}/add";
+            return "redirect:/games/guides/{id}/add";
         }
 
         GuideAddServiceModel newGuide = modelMapper.map(guideAddBindingModel, GuideAddServiceModel.class);
@@ -89,10 +90,15 @@ public class GuideController {
 
 
     @DeleteMapping("guides/{id}/delete")
-    public String deleteGuide(@PathVariable Long id) {
-        //TODO GUIDE DELETE IF USER IS OWNER OR ADMIN, implement in guide-view html
+    public String deleteGuide(@PathVariable Long id, Model model) {
+
+
+        Long gameOfTheGuide = guideService.getGameOfTheGuide(id);
+        guideService.deleteGuide(id);
+        //TODO GUIDE DELETE IF USER IS OWNER OR ADMIN
         // check if after deleting guide, the games is deleted as well and fix
-        return "redirect:/games/{id}/view";
+        String returnString = "redirect:/games/" + gameOfTheGuide + "/view";
+        return returnString;
     }
 
 
@@ -111,7 +117,7 @@ public class GuideController {
 
         commentService.addComment(commentAddServiceModel, id, currentUser.getUserIdentifier());
 
-        return "redirect:/guides/{id}/view";
+        return "redirect:/games/guides/{id}/view";
     }
 
 }

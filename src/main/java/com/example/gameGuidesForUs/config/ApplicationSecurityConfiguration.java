@@ -31,11 +31,12 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/users/login", "users/register").anonymous()
-                .antMatchers(HttpMethod.GET,"/games/**/update/","/games/add/").hasRole(UserRoleEnum.ADMIN.name())
-                .antMatchers(HttpMethod.DELETE, "games/**/delete/").hasRole(UserRoleEnum.ADMIN.name())
-                .antMatchers(HttpMethod.GET,"/guides/**/add/").authenticated()//TODO ADD ERROR PAGE FOR UNAUTHORIZED USERS + BACK TO GAMES LINK
-                .antMatchers(HttpMethod.POST, "/comments/**/add/").authenticated()
+                .antMatchers("/users/login", "/users/register").anonymous()
+                .antMatchers(HttpMethod.GET,"/games/**/update","/games/add").hasRole(UserRoleEnum.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/games/**/delete").hasRole(UserRoleEnum.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/**/guides/**/delete").hasRole(UserRoleEnum.ADMIN.name())
+                .antMatchers("/**/guides/**/add").authenticated()//TODO ADD ERROR PAGE FOR UNAUTHORIZED USERS + BACK TO GAMES LINK
+                .antMatchers(HttpMethod.POST, "/**/comments/**/add").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/users/login")

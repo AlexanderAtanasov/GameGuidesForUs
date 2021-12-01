@@ -10,10 +10,11 @@ import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.ScreenshotService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -63,16 +64,19 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public void deleteComment(Long id) {
 
+
+        Optional<Comment> check = commentRepository.findById(id);
         Comment forDeletion = commentRepository.getById(id);
 
         if (forDeletion.getScreenshot() == null) {
-            commentRepository.deleteById(id);
+            commentRepository.delete(forDeletion);
         } else {
             Long screenshotId = commentRepository.getById(id).getScreenshot().getId();
             commentRepository.deleteById(id);
             screenshotService.deleteScreenshot(screenshotId);
         }
 
+        System.out.println();
     }
 
 

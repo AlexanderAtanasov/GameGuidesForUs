@@ -13,6 +13,7 @@ import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.GuideService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,6 +75,17 @@ public class GuideServiceImpl implements GuideService {
         //TODO FIX MUTLIPLEROLES USERS OF HAVING DUPLICATE COMMENTS
         //TODO RETURN 404 PAGE
 
+    }
+
+    @Override
+    public void deleteGuide(Long id) {
+        guideRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Long getGameOfTheGuide(Long id) {
+        return guideRepository.getById(id).getGameId().getId();
     }
 
 }

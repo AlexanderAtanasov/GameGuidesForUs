@@ -9,6 +9,7 @@ import java.util.List;
 
 public class GuideViewModel {
 
+    private Long id;
     private String guideTitle;
     private String description;
     private User guideCreatedBy;
@@ -57,6 +58,15 @@ public class GuideViewModel {
 
     public GuideViewModel setGameId(Game gameId) {
         this.gameId = gameId;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public GuideViewModel setId(Long id) {
+        this.id = id;
         return this;
     }
 }

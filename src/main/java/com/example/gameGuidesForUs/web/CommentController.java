@@ -27,6 +27,6 @@ public class CommentController {
 
         commentService.deleteComment(commentId);
 
-        return "redirect:/guides/{guideId}/view";
+        return "redirect:/games/guides/{guideId}/view";
     }
 }

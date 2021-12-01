@@ -15,4 +15,8 @@ public interface GuideService {
     void addGuide(GuideAddServiceModel newGuide, Long gameId, String userIdentifier);
 
     GuideViewModel findGuideById(Long id);
+
+    void deleteGuide(Long id);
+
+    Long getGameOfTheGuide(Long id);
 }

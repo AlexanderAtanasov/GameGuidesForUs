@@ -18,7 +18,7 @@ public class Game extends BaseEntity {
     private String gameScreenshotUrl;
     private List<Guide> guides;
 
-    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL,fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Guide> getGuides() {
         return guides;
     }

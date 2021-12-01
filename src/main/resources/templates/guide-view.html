@@ -42,6 +42,13 @@
                         <div class="gCard-body">
                             <p th:text="*{description}"></p>
                         </div>
+                        <div class="d-flex justify-content-center links">
+                            <th:block sec:authorize="hasRole('ADMIN')">
+                                <form th:action="@{/games/guides/{id}/delete(id=*{id})}" th:method="delete">
+                                    <input type="submit" class="btn btn-sm btn-outline-secondary text-dark" value="Delete Guide"/>
+                                </form>
+                            </th:block>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,7 +90,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center links">
                                     <th:block sec:authorize="hasRole('ADMIN')">
-                                        <form th:action="@{/comments/{guideId}/delete/{commentId}(guideId=*{id}, commentId=*{commentId})}" th:method="delete">
+                                        <form th:action="@{/comments/{guideId}/delete/{commentId}(guideId=*{id}, commentId=*{commentId})}" th:method="DELETE">
                                             <input type="submit" class="btn btn-sm btn-outline-secondary text-dark" value="Delete Comment"/>
                                         </form>
                                     </th:block>
@@ -100,7 +107,7 @@
             <div class="container-fluid mt-100">
                 <form th:object="${commentAddBindingModel}"
                       th:method="POST"
-                      th:action="@{/comments/{id}/add/(id=${id})}"
+                      th:action="@{/games/comments/{id}/add/(id=${id})}"
                       enctype="multipart/form-data">
                     <div>Add Comment</div>
                     <div class="d-flex flex-row align-items-start">
