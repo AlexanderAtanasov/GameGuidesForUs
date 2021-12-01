@@ -24,9 +24,12 @@ public class CommentController {
     @DeleteMapping("/comments/{guideId}/delete/{commentId}")
     public String DeleteComment(@PathVariable Long guideId, @PathVariable Long commentId){
 
-
+    //TODO ONLY IF ADMIN OR CREATOR
         commentService.deleteComment(commentId);
 
         return "redirect:/games/guides/{guideId}/view";
     }
+
+
+    //TODO CREATE UPDATE COMMENT SECTION FOR ONLY ADMIN OR CREATOR
 }

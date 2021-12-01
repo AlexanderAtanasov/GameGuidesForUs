@@ -80,6 +80,7 @@ public class GuideServiceImpl implements GuideService {
     @Override
     public void deleteGuide(Long id) {
         guideRepository.deleteById(id);
+
     }
 
     @Override

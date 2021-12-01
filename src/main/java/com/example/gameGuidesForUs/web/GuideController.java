@@ -81,7 +81,6 @@ public class GuideController {
 
     @GetMapping("/guides/{id}/view")
     public String viewGuide(@PathVariable Long id, Model model) {
-
         List<CommentViewModel> byGuideId = commentService.findByGuideId(id);
         model.addAttribute("currentGuide", guideService.findGuideById(id));
         model.addAttribute("allCommentsForTheGuide", commentService.findByGuideId(id));

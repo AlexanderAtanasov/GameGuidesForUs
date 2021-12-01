@@ -70,7 +70,7 @@ public class Guide extends BaseEntity {
     }
 
 
-    @OneToMany(mappedBy = "guide")
+    @OneToMany(mappedBy = "guide", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Comment> getComments() {
         return comments;
     }
