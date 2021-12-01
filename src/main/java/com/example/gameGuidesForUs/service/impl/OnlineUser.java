@@ -15,4 +15,8 @@ public class OnlineUser extends User {
     public String getUserIdentifier() {
         return getUsername();
     }
+
+
+
+
 }

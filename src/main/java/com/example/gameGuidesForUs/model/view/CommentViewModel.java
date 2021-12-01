@@ -10,12 +10,22 @@ import java.util.List;
 
 public class CommentViewModel {
 
+    private Long id;
     private Guide guideId;
     private String comment;
     private User commentCreatedBy;
     private Instant createdOn;
     private Instant modifiedOn;
-    private List<Screenshot> screenshots = new ArrayList<>();
+    private String screenshot;
+
+    public Long getId() {
+        return id;
+    }
+
+    public CommentViewModel setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
     public Guide getGuideId() {
         return guideId;
@@ -62,12 +72,12 @@ public class CommentViewModel {
         return this;
     }
 
-    public List<Screenshot> getScreenshots() {
-        return screenshots;
+    public String getScreenshot() {
+        return screenshot;
     }
 
-    public CommentViewModel setScreenshots(List<Screenshot> screenshots) {
-        this.screenshots = screenshots;
+    public CommentViewModel setScreenshot(String screenshot) {
+        this.screenshot = screenshot;
         return this;
     }
 }

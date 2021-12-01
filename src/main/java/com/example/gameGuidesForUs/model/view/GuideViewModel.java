@@ -5,7 +5,6 @@ import com.example.gameGuidesForUs.model.entity.Game;
 import com.example.gameGuidesForUs.model.entity.User;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GuideViewModel {
@@ -14,7 +13,6 @@ public class GuideViewModel {
     private String description;
     private User guideCreatedBy;
     private Instant createdOn;
-    private List<Comment> comments;
     private Game gameId;
 
     public String getGuideTitle() {
@@ -50,15 +48,6 @@ public class GuideViewModel {
 
     public GuideViewModel setCreatedOn(Instant createdOn) {
         this.createdOn = createdOn;
-        return this;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public GuideViewModel setComments(List<Comment> comments) {
-        this.comments = comments;
         return this;
     }
 

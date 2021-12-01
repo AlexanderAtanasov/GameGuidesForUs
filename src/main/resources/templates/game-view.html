@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <head th:replace="fragments/commons::head">
 </head>
 <body>
@@ -30,10 +31,11 @@
                    th:utext="'&lt;strong&gt; Game Description: &lt;/strong&gt;'  + *{gameDescription}"></p>
             </div>
         </div>
-        <div class="btn-group font-weight-bold">
+     <th:block sec:authorize="isAuthenticated()" >
+        <div class="btn-group font-weight-bold" >
             <a type="button" class="btn btn-sm btn-outline-secondary text-white"
                th:href="@{/guides/{id}/add/(id= *{id})}">Add Guide</a>
-        </div>
+        </div></th:block>
 
         <div class="border bg-blur">
             <h3 class="text-white text-center ">Guides</h3>

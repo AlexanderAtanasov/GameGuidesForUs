@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
@@ -103,17 +104,19 @@ public class UserServiceImpl implements UserService {
             admin.setUsername("admin")
                     .setPassword(passwordEncoder.encode("admin"))
                     .setFirstName("Admin")
-                    .setLastName("Admin")
+                    .setLastName("Adminov")
                     .setEmail("admin@project.com")
+                    .setRegisteredOn(Instant.now())
                     .setRoles(Set.of(adminRole, userRole));
             userRepository.save(admin);
 
             User testUser = new User();
             testUser.setUsername("test")
                     .setPassword(passwordEncoder.encode("test"))
-                    .setFirstName("test1")
-                    .setLastName("test1")
+                    .setFirstName("Test")
+                    .setLastName("Testov")
                     .setEmail("test@project.com")
+                    .setRegisteredOn(Instant.now())
                     .setRoles(Set.of(userRole));
             userRepository.save(testUser);
         }

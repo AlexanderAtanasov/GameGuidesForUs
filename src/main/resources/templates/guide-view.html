@@ -1,59 +1,124 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/commons::head">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Game Guides For Us</title>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/guide.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <header th:replace="fragments/commons::navigation"></header>
 <main role="main">
-    <div class="jumbotron"
-         th:object="${currentGuide}">
-        <div class="col-md-3 card mb-4 box-shadow col border mx-auto">
-            <p class="card-text  border-bottom text-white"
-               th:utext="'&lt;strong&gt; Game Title: &lt;/strong&gt;'  + *{gameId.gameTitle}"></p>
-            <p class="card-text  border-bottom text-white"
-               th:utext="'&lt;strong&gt; Guide Title: &lt;/strong&gt;'  + *{guideTitle}"></p>
-            <p class="card-text  border-bottom text-white"
-               th:utext="'&lt;strong&gt; Created By: &lt;/strong&gt;'  + *{guideCreatedBy.username}"></p>
-            <p class="card-text  border-bottom text-white"
-               th:utext="'&lt;strong&gt; Created On: &lt;/strong&gt;'  + *{#dates.format(createdOn, 'dd-MM-yyyy HH:mm:ss')}"></p>
-            <p class="card-text   text-white"
-               th:utext="'&lt;strong&gt; Guide: &lt;/strong&gt;'  + *{description}"></p>
-            <tr class=" text-white" th:each="comment: *{comments}">
-                <td class=" text-white" th:text="${comment.getComment()}" />
-            </tr>
-
-        </div>
-        <div class="container-fluid fmt-100">
+    <div class="jumbotron">
+        <!--Guide Section-->
+        <div class="container-fluid mt-100" th:object="${currentGuide}">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="fcard mb-4">
-                        <div class="fcard-header">
-                            <div class="fmedia flex-wrap w-100 align-items-center"> <img src="https://i.imgur.com/iNmBizf.jpg" class="d-block ui-w-40 rounded-circle" alt="">
-                                <div class="fmedia-fbody ml-3"> <a href="javascript:void(0)" data-abc="true">Tom Harry</a>
-                                    <div class="text-muted small">13 days ago</div>
-                                </div>
-                                <div class="text-muted small ml-3">
-                                    <div>Member since <strong>01/1/2019</strong></div>
-                                    <div><strong>134</strong> posts</div>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <div class="media flex-wrap w-100 align-items-center">
+                                <div class="card-text media-body">
+                                    <a href="javascript:void(0)"
+                                       data-abc="true"
+                                       th:utext="'&lt;strong&gt;Guide Title: '+ *{guideTitle} + '&lt;/strong&gt;'">Creator</a>
+                                    <div class="text-muted small"
+                                         th:utext="'&lt;strong&gt; Created By: &lt;/strong&gt;'  + *{guideCreatedBy.username}"></div>
+                                    <div class="text-muted small"
+                                         th:utext="'&lt;strong&gt; Created On: &lt;/strong&gt;'  + *{#dates.format(createdOn, 'dd-MM-yyyy')}"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="fcard-fbody">
-                            <p> For me, getting my business website made was a lot of tech wizardry things. Thankfully i get an ad on Facebook ragarding commence website. I get connected with BBB team. They made my stunning website live in just 3 days. With the increase demand of online customers. I had to take my business online. BBB Team guided me at each step and enabled me to centralise my work and have control on all aspect of my online business. </p>
-                            <p> For me, getting my business website made was a lot of tech wizardry things. Thankfully i get an ad on Facebook ragarding commence website. I get connected with BBB team. They made my stunning website live in just 3 days. With the increase demand of online customers. I had to take my business online. BBB Team guided me at each step and enabled me to centralise my work and have control on all aspect of my online business. </p>
+                        <div class="gCard-body">
+                            <p th:text="*{description}"></p>
                         </div>
-                        <div class="fcard-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
-                            <div class="px-4 pt-3"> <a href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true"> <i class="fa fa-heart text-danger"></i>&nbsp; <span class="align-middle">445</span> </a> <span class="text-muted d-inline-flex align-items-center align-middle ml-4"> <i class="fa fa-eye text-muted fsize-3"></i>&nbsp; <span class="align-middle">14532</span> </span> </div>
-                            <div class="px-4 pt-3"> <button type="button" class="fbtn fbtn-primary"><i class="ion ion-md-create"></i>&nbsp; Reply</button> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Comment Section       -->
+        <div class="container-fluid mt-100">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4" th:each="c : ${allCommentsForTheGuide}">
+                        <div class="card-header">
+                            <div class="media flex-wrap w-100 align-items-center">
+                                <div class="card-text media-body ">
+                                    <a
+                                       data-abc="true"
+                                       th:utext="*{c.commentCreatedBy.firstName} + ' ' +*{c.commentCreatedBy.lastName}">Creator</a>
+                                    <div class="text-muted small"
+                                         th:text="|Comment created on: *{#dates.format(c.createdOn, 'dd-MM-yyyy HH:mm:ss')}|"></div>
+                                </div>
+                                <div class="text-muted small ml-3">
+                                    <div>Member since <strong
+                                            th:text="*{#dates.format(c.commentCreatedBy.registeredOn, 'dd-MM-yyyy')}">01/1/2019</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p th:text="*{c.comment}"></p>
+                            <div th:if="${c.screenshot !=null}">
+                                <a th:href="*{c.screenshot}">
+                                <img th:src="*{c.screenshot} " class="card-img-top"
+                                     alt="Thumbnail [100%x225]"
+                                     data-holder-rendered="true">
+                                </a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+<!--Comment adding section-->
+        <th:block sec:authorize="isAuthenticated()">
+            <div class="container-fluid mt-100">
+                <form th:object="${commentAddBindingModel}"
+                      th:method="POST"
+                      th:action="@{/comments/{id}/add/(id=${id})}"
+                      enctype="multipart/form-data">
+                    <div>Add Comment</div>
+                    <div class="d-flex flex-row align-items-start">
+                    <textarea class="form-control ml-1 shadow-none textarea z-depth-1"
+                              th:field="*{comment}"
+                              id="exampleFormControlTextarea6" rows="4"
+                              placeholder="Add Comment here..."></textarea></div>
+                    <div>Add Screenshot</div>
+                    <input th:field="*{screenshot}"
+                           class="form-control" type="file" id="formFile">
+                    <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                        <div class="px-4 pt-3">
+                            <button type="submit" class="btn btn-primary"><i class="ion ion-md-create"></i>Add
+                                Comment
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </th:block>
+        <th:block sec:authorize="!isAuthenticated()">
+        <div class="card-footer">
+            <div class="d-flex justify-content-center links">
+               To add comment please <a href="/users/login" th:utext="'&nbsp;login.'"></a>
+            </div>
+        </div>
+        </th:block>
     </div>
 
 </main>
+<footer th:replace="fragments/commons::footer"></footer>
 </body>
 </html>

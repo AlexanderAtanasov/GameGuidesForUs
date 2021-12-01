@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    @Query("select c from Comment c where c.guide.id=?1 order by c.createdOn desc")
+    @Query("select c from Comment c where c.guide.id=?1 order by c.createdOn asc")
     List<Comment> findAllByGuideIdOrderByCreatedOnDesc(Long guideId);
 }

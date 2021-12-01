@@ -3,6 +3,7 @@ package com.example.gameGuidesForUs.model.entity;
 import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +20,16 @@ public class User extends BaseEntity{
     private String email;
     private List<Comment> allUserComments = new ArrayList<>();
     private Set<UserRoleEntity> roles = new HashSet<>();
+    private Instant registeredOn;
+
+    public Instant getRegisteredOn() {
+        return registeredOn;
+    }
+
+    public User setRegisteredOn(Instant registeredOn) {
+        this.registeredOn = registeredOn;
+        return this;
+    }
 
     public User() {
     }
@@ -91,5 +102,9 @@ public class User extends BaseEntity{
     public User setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
         return this;
+    }
+
+    public Integer totalComments() {
+       return getAllUserComments().size();
     }
 }

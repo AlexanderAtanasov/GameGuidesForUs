@@ -14,7 +14,7 @@ public class Comment extends BaseEntity {
     private User commentCreatedBy;
     private Instant createdOn;
     private Instant modifiedOn;
-    private List<Screenshot> screenshots = new ArrayList<>();
+    private Screenshot screenshot;
 
     public Comment() {
     }
@@ -49,7 +49,6 @@ public class Comment extends BaseEntity {
         return this;
     }
 
-    @Column(nullable = false)
     public Instant getCreatedOn() {
         return createdOn;
     }
@@ -68,16 +67,16 @@ public class Comment extends BaseEntity {
         return this;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-    public List<Screenshot> getScreenshots() {
-        return screenshots;
+
+    @ManyToOne
+    public Screenshot getScreenshot() {
+        return screenshot;
     }
 
-    public Comment setScreenshots(List<Screenshot> screenshots) {
-        this.screenshots = screenshots;
+    public Comment setScreenshot(Screenshot screenshot) {
+        this.screenshot = screenshot;
         return this;
     }
-
 
     @PrePersist
     public void beforeCreate() {
