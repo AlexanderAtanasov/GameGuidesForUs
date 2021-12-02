@@ -68,7 +68,7 @@ public class Comment extends BaseEntity {
     }
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     public Screenshot getScreenshot() {
         return screenshot;
     }
