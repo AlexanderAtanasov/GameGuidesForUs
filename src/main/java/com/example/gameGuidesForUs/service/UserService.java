@@ -28,4 +28,6 @@ public interface UserService {
     List<UserViewModel> getAllUsers();
 
     void deleteUser(Long id);
+
+    void makeUserAnAdmin(Long id);
 }

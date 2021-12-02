@@ -21,6 +21,18 @@ public class User extends BaseEntity{
     private List<Comment> allUserComments = new ArrayList<>();
     private Set<UserRoleEntity> roles = new HashSet<>();
     private Instant registeredOn;
+    private List<Guide> guides;
+
+
+    @OneToMany(mappedBy = "guideCreatedBy", cascade = CascadeType.REMOVE)
+    public List<Guide> getGuides() {
+        return guides;
+    }
+
+    public User setGuides(List<Guide> guides) {
+        this.guides = guides;
+        return this;
+    }
 
     public Instant getRegisteredOn() {
         return registeredOn;
@@ -84,7 +96,7 @@ public class User extends BaseEntity{
         return this;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy = "commentCreatedBy", cascade = CascadeType.REMOVE)
     public List<Comment> getAllUserComments() {
         return allUserComments;
     }

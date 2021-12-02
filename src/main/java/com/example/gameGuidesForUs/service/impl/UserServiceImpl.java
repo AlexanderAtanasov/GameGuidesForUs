@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +62,7 @@ public class UserServiceImpl implements UserService {
                 .setFirstName(userServiceModel.getFirstName())
                 .setLastName(userServiceModel.getLastName())
                 .setPassword(passwordEncoder.encode(userServiceModel.getPassword()))
+                .setRegisteredOn(Instant.now())
                 .setRoles(Set.of(userRole));
 
         userRepository.save(newUser);
@@ -153,5 +155,14 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
 
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void makeUserAnAdmin(Long id) {
+        UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ADMIN);
+        UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.USER);
+        User user = userRepository.findById(id).orElse(null);
+        user.setRoles(Set.of(adminRole,userRole));
+        userRepository.save(user);
     }
 }

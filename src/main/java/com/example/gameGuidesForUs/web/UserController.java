@@ -70,7 +70,6 @@ public class UserController {
         UserRegistrationServiceModel userServiceModel =
                 modelMapper.map(userRegistrationBindingModel, UserRegistrationServiceModel.class);
         userService.registerUserAndLogIn(userServiceModel);
-
         return "redirect:/";
     }
 
@@ -85,9 +84,18 @@ public class UserController {
     public String deleteUser(@PathVariable Long id) {
 
         userService.deleteUser(id);
-
         return "redirect:/users/all";
     }
+
+    @PatchMapping("{id}/addAdminRole")
+    public String makeAdmin(@PathVariable Long id) {
+
+        userService.makeUserAnAdmin(id);
+        return "redirect:/users/all";
+    }
+
+
+
     //TODO ADMIN SHOULD HAVE ACCESS TO ALL USERS AND BE ABLE TO SWAP THEIR ROLES, PUT IN DROPDOWN
     // EVENT COULD BE CHECK IF USER COMMENTS AND THE MORE COMMENTS HE HAS, SOME REWARD ETC.
 
