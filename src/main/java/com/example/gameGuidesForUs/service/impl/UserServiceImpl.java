@@ -4,9 +4,11 @@ import com.example.gameGuidesForUs.model.entity.User;
 import com.example.gameGuidesForUs.model.entity.UserRoleEntity;
 import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 import com.example.gameGuidesForUs.model.service.UserRegistrationServiceModel;
+import com.example.gameGuidesForUs.model.view.UserViewModel;
 import com.example.gameGuidesForUs.repository.UserRepository;
 import com.example.gameGuidesForUs.repository.UserRoleRepository;
 import com.example.gameGuidesForUs.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,12 +29,14 @@ public class UserServiceImpl implements UserService {
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
     private final OnlineUserServiceImpl onlineUserService;
+    private final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder, OnlineUserServiceImpl onlineUserService) {
+    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder, OnlineUserServiceImpl onlineUserService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.onlineUserService = onlineUserService;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -130,5 +135,17 @@ public class UserServiceImpl implements UserService {
                 getRoles().
                 stream().
                 map(UserRoleEntity::getRole).anyMatch(r -> r.equals(UserRoleEnum.ADMIN));
+    }
+
+    @Override
+    public List<UserViewModel> getAllUsers() {
+
+        List<UserViewModel> userViewModels = userRepository.findAll()
+                .stream().map(user -> modelMapper.map(user, UserViewModel.class))
+                .collect(Collectors.toList());
+
+        return  userRepository.findAll()
+                .stream().map(user -> modelMapper.map(user,UserViewModel.class))
+                .collect(Collectors.toList());
     }
 }

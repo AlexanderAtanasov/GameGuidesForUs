@@ -43,7 +43,6 @@ public class UserController {
                               RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("bad_credentials", true)
                 .addFlashAttribute("username", username);
-
         return "redirect:login";
     }
 
@@ -78,6 +77,13 @@ public class UserController {
         return "redirect:/";
     }
 
+
+    @GetMapping("/all")
+    public String allUsers(Model model) {
+        model.addAttribute("usersInfo",userService.getAllUsers());
+
+        return "users-all";
+    }
     //TODO ADMIN SHOULD HAVE ACCESS TO ALL USERS AND BE ABLE TO SWAP THEIR ROLES, PUT IN DROPDOWN
     // EVENT COULD BE CHECK IF USER COMMENTS AND THE MORE COMMENTS HE HAS, SOME REWARD ETC.
 
