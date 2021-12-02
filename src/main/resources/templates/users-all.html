@@ -65,16 +65,24 @@
                                                     </form>
                                                 </th:block>
                                             </th:block>
-
                                         </li>
-                                        <li>
-                                            <th:block th:if="*{id!=1}">
-                                                <form th:action="@{/users/{id}/delete(id=*{id})}" th:method="DELETE">
-                                                    <input type="submit"
-                                                           class="btn btn-sm btn-outline-secondary text-dark"
-                                                           value="Delete User"/>
-                                                </form>
-                                            </th:block>
+                                        </li>
+                                        <th:block th:if="*{id!=1 and #lists.size(roles)==2}">
+                                            <form th:action="@{/users/{id}/removeAdminRole(id=*{id})}" th:method="PATCH">
+                                                <input type="submit"
+                                                       class="btn btn-sm btn-outline-secondary text-dark"
+                                                       value="Remove Admin Role"/>
+                                            </form>
+                                        </th:block>
+                                        </li>
+                                        </li>
+                                        <th:block th:if="*{id!=1}">
+                                            <form th:action="@{/users/{id}/delete(id=*{id})}" th:method="DELETE">
+                                                <input type="submit"
+                                                       class="btn btn-sm btn-outline-secondary text-dark"
+                                                       value="Delete User"/>
+                                            </form>
+                                        </th:block>
                                         </li>
                                     </ul>
                                 </td>

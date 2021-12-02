@@ -94,6 +94,12 @@ public class UserController {
         return "redirect:/users/all";
     }
 
+    @PatchMapping("{id}/removeAdminRole")
+    public String demoteFromAdmin(@PathVariable Long id) {
+
+        userService.removeAdminRole(id);
+        return "redirect:/users/all";
+    }
 
 
     //TODO ADMIN SHOULD HAVE ACCESS TO ALL USERS AND BE ABLE TO SWAP THEIR ROLES, PUT IN DROPDOWN

@@ -30,4 +30,6 @@ public interface UserService {
     void deleteUser(Long id);
 
     void makeUserAnAdmin(Long id);
+
+    void removeAdminRole(Long id);
 }

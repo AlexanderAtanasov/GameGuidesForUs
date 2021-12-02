@@ -165,4 +165,13 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Set.of(adminRole,userRole));
         userRepository.save(user);
     }
+
+    @Override
+    public void removeAdminRole(Long id) {
+
+        UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.USER);
+        User user = userRepository.findById(id).orElse(null);
+        user.setRoles(Set.of(userRole));
+        userRepository.save(user);
+    }
 }
