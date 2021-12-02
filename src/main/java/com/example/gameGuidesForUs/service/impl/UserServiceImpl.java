@@ -148,4 +148,10 @@ public class UserServiceImpl implements UserService {
                 .stream().map(user -> modelMapper.map(user,UserViewModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteUser(Long id) {
+
+        userRepository.deleteById(id);
+    }
 }

@@ -44,8 +44,14 @@
                                 </td>
                                 <td>
                                     <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                        <li><a href="#" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
-                                        <li><a href="#" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+                                        <li><form th:action="@{/users/{id}/modify(id=*{id})}" th:method="GET">
+                                            <input type="submit" class="btn btn-sm btn-outline-secondary text-dark" value="Modify User"/>
+                                        </form></li>
+                                        <li>
+                                            <form th:action="@{/users/{id}/delete(id=*{id})}" th:method="DELETE">
+                                                <input type="submit" class="btn btn-sm btn-outline-secondary text-dark" value="Delete User"/>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </td>
                             </tr>

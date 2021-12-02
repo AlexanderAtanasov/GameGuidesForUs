@@ -26,4 +26,6 @@ public interface UserService {
     boolean checkIfUserIsAdmin(OnlineUser currentUser);
 
     List<UserViewModel> getAllUsers();
+
+    void deleteUser(Long id);
 }
