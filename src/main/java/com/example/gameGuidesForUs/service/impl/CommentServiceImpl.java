@@ -1,6 +1,9 @@
 package com.example.gameGuidesForUs.service.impl;
 
 import com.example.gameGuidesForUs.model.entity.Comment;
+import com.example.gameGuidesForUs.model.entity.User;
+import com.example.gameGuidesForUs.model.entity.UserRoleEntity;
+import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 import com.example.gameGuidesForUs.model.service.CommentAddServiceModel;
 import com.example.gameGuidesForUs.model.view.CommentViewModel;
 import com.example.gameGuidesForUs.repository.CommentRepository;
@@ -10,6 +13,7 @@ import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.ScreenshotService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
@@ -77,6 +81,27 @@ public class CommentServiceImpl implements CommentService {
         }
 
         System.out.println();
+    }
+
+    @Override
+    public boolean isOwnerOrAdmin(String userIdentifier, Long commentId) {
+        Comment comment = commentRepository.getById(commentId);
+        User user = userRepository.getByUsername(userIdentifier);
+        return  comment.getCommentCreatedBy().getId() == user.getId() || isAdmin(user) ;
+    }
+
+    @Override
+    public CommentViewModel getCurrentComment(Long commentId) {
+        return commentRepository.findById(commentId)
+                .map(comment -> modelMapper.map(comment,CommentViewModel.class))
+                .orElse(null);
+    }
+
+    private boolean isAdmin(User user) {
+        return user.
+                getRoles().
+                stream().
+                map(UserRoleEntity::getRole).anyMatch(r-> r.equals(UserRoleEnum.ADMIN));
     }
 
 

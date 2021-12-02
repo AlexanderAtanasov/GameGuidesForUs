@@ -95,7 +95,6 @@ public class GuideController {
         Long gameOfTheGuide = guideService.getGameOfTheGuide(id);
         guideService.deleteGuide(id);
         //TODO GUIDE DELETE IF USER IS OWNER OR ADMIN
-        // check if after deleting guide, the games is deleted as well and fix
         String returnString = "redirect:/games/" + gameOfTheGuide + "/view";
         return returnString;
     }
@@ -104,7 +103,8 @@ public class GuideController {
     @PostMapping("/comments/{id}/add")
     public String addComment(@PathVariable Long id,
                              @Valid CommentAddBindingModel commentAddBindingModel,
-                             @AuthenticationPrincipal OnlineUser currentUser) throws IOException {
+                             @AuthenticationPrincipal OnlineUser currentUser ) throws IOException {
+
 
         CommentAddServiceModel commentAddServiceModel = modelMapper.map(commentAddBindingModel, CommentAddServiceModel.class);
         if (!commentAddBindingModel.getScreenshot().isEmpty()) {

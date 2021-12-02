@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("select c from Comment c where c.guide.id=?1 order by c.createdOn asc")
     List<Comment> findAllByGuideIdOrderByCreatedOnDesc(Long guideId);
+
+
+    Optional<Comment> findByScreenshotId(Long screenshot_id);
 }

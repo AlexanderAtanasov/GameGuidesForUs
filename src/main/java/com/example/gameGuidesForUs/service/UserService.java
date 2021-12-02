@@ -1,6 +1,7 @@
 package com.example.gameGuidesForUs.service;
 
 import com.example.gameGuidesForUs.model.service.UserRegistrationServiceModel;
+import com.example.gameGuidesForUs.service.impl.OnlineUser;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,4 +20,5 @@ public interface UserService {
 
     void initAdminAndTestUser();
 
+    boolean checkIfUserIsAdmin(OnlineUser currentUser);
 }

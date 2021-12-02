@@ -32,7 +32,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/users/login", "/users/register").anonymous()
-                .antMatchers(HttpMethod.GET,"/games/**/update","/games/add").hasRole(UserRoleEnum.ADMIN.name())
+                .antMatchers(HttpMethod.GET,"/games/**/update","/games/add","/statistics").hasRole(UserRoleEnum.ADMIN.name())
                 .antMatchers(HttpMethod.DELETE, "/games/**/delete").hasRole(UserRoleEnum.ADMIN.name())
                 .antMatchers(HttpMethod.DELETE, "/**/guides/**/delete").hasRole(UserRoleEnum.ADMIN.name())
                 .antMatchers("/**/guides/**/add").authenticated()//TODO ADD ERROR PAGE FOR UNAUTHORIZED USERS + BACK TO GAMES LINK

@@ -121,4 +121,14 @@ public class UserServiceImpl implements UserService {
             userRepository.save(testUser);
         }
     }
+
+    @Override
+    public boolean checkIfUserIsAdmin(OnlineUser currentUser) {
+        User user = userRepository.getByUsername(currentUser.getUserIdentifier());
+
+        return user.
+                getRoles().
+                stream().
+                map(UserRoleEntity::getRole).anyMatch(r -> r.equals(UserRoleEnum.ADMIN));
+    }
 }

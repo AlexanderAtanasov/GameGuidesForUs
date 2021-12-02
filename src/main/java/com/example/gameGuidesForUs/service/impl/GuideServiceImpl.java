@@ -72,7 +72,6 @@ public class GuideServiceImpl implements GuideService {
         return guideRepository
                 .findById(id)
                 .map(guide -> modelMapper.map(guide, GuideViewModel.class)).orElse(null);
-        //TODO FIX MUTLIPLEROLES USERS OF HAVING DUPLICATE COMMENTS
         //TODO RETURN 404 PAGE
 
     }

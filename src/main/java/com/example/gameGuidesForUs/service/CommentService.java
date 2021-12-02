@@ -14,4 +14,9 @@ public interface CommentService {
     void addComment(CommentAddServiceModel commentAddServiceModel, Long guideId, String username);
 
     void deleteComment(Long id);
+
+
+    boolean isOwnerOrAdmin(String userIdentifier, Long commentId);
+
+    CommentViewModel getCurrentComment(Long commentId);
 }
