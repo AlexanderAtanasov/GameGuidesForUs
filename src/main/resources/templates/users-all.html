@@ -60,7 +60,7 @@
                                                     <form th:action="@{/users/{id}/addAdminRole(id=*{id})}"
                                                           th:method="PATCH">
                                                         <input type="submit"
-                                                               class="btn btn-sm btn-outline-secondary text-dark"
+                                                               class="btn btn-sm btn-outline-primary text-white"
                                                                value="Add Admin Role"/>
                                                     </form>
                                                 </th:block>
@@ -70,7 +70,7 @@
                                         <th:block th:if="*{id!=1 and #lists.size(roles)==2}">
                                             <form th:action="@{/users/{id}/removeAdminRole(id=*{id})}" th:method="PATCH">
                                                 <input type="submit"
-                                                       class="btn btn-sm btn-outline-secondary text-dark"
+                                                       class="btn btn-sm btn-outline-primary text-white"
                                                        value="Remove Admin Role"/>
                                             </form>
                                         </th:block>
@@ -79,7 +79,7 @@
                                         <th:block th:if="*{id!=1}">
                                             <form th:action="@{/users/{id}/delete(id=*{id})}" th:method="DELETE">
                                                 <input type="submit"
-                                                       class="btn btn-sm btn-outline-secondary text-dark"
+                                                       class="btn btn-sm btn-outline-secondary text-white"
                                                        value="Delete User"/>
                                             </form>
                                         </th:block>
@@ -89,18 +89,6 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="text-center mt-3 mt-sm-3">
-                            <ul class="pagination justify-content-center mb-0">
-                                <li class="page-item disabled"><span class="page-link">Prev</span></li>
-                                <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span
-                                        class="sr-only">(current)</span></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">...</a></li>
-                                <li class="page-item"><a class="page-link" href="#">25</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>

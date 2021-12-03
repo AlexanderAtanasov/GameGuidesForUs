@@ -19,11 +19,3 @@ function getGames() {
 }
 
 
-$('body').on('click', 'button.delete-btn', function () {
-    let bookId = $(this).data('book-id');
-    console.log("Book id to delete is " + bookId);
-
-    fetch('http://localhost:8080/books/' + bookId, {
-        method: 'DELETE'
-    }).then(_ => reloadBooks())
-});

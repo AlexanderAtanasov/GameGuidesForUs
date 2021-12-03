@@ -17,14 +17,13 @@
                      th:each="g: ${allGamesPreview}"
                      th:object="${g}">
                     <a th:href="@{/games/{id}/view/(id= *{id})}">
-                        <img th:src="*{getGameScreenshotUrl()}  " class="card-img-top"
+                        <img th:src="*{getGameScreenshotUrl()}  " class="article-img  img-thumbnail"
                              alt="Thumbnail [100%x225]"
-                             data-holder-rendered="true"
-                        >
+                             data-holder-rendered="true">
                     </a>
                     <div class="card-body">
                         <p class="text-center">
-                        <p class="card-text border-bottom text-center text-white"
+                        <p class="card-text border-bottom text-center text-white" style="min-height: 48px"
                            th:text="|Game Title: *{gameTitle}|"></p>
                         <p class="card-text border-bottom text-center text-white" th:text="|Genre: *{genre}|"></p>
                         <p class="card-text border-bottom text-center text-white"
@@ -33,7 +32,7 @@
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a type="button" class="btn btn-sm btn-outline-secondary text-white"
+                            <a type="button" class="btn btn-sm btn-outline-primary text-white"
                                th:href="@{/games/{id}/view/(id= *{id})}">View More</a>
                         </div>
                         <th:block sec:authorize="hasRole('ADMIN')">
@@ -49,7 +48,8 @@
         <th:block th:if="${totalGames == 0}">
             <h3 class="text-center text-white mt-5">Currently there are no games added.</h3>
             <h3 class="text-center text-white mt-5" sec:authorize="!hasRole('ADMIN')"> Admin is working on it.</h3>
-            <h3 class="text-center mt-5"> <a class="text-white" sec:authorize="hasRole('ADMIN')" th:href="@{/games/add}">Add Game Here.</a></h3></th:block>
+            <h3 class="text-center mt-5"><a class="text-white" sec:authorize="hasRole('ADMIN')" th:href="@{/games/add}">Add
+                Game Here.</a></h3></th:block>
     </div>
 </main>
 <footer th:replace="fragments/commons::footer"></footer>

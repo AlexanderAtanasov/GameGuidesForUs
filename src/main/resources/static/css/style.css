@@ -123,3 +123,20 @@ body {
     align-content: center;
     text-align: center;
 }
+
+.btn-outline-primary{
+    background-color: #3f6ad8;
+}
+
+.btn-outline-secondary{
+    background-color: #ff0000;
+}
+
+
+
+.article-img{
+    height: 225px;
+    width: 100%;
+    display: block;
+}
+

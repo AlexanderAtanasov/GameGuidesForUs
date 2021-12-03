@@ -79,13 +79,13 @@ public class UserController {
     @GetMapping("/all")
     public String allUsers(Model model,
                            @AuthenticationPrincipal OnlineUser currentUser) {
-        model.addAttribute("usersInfo",userService.getAllUsers(currentUser));
+        model.addAttribute("usersInfo", userService.getAllUsers(currentUser));
         return "users-all";
     }
 
     @DeleteMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
-        if(id==1) {
+        if (id == 1) {
             throw new RuntimeException();
         }
         //TODO IF SELFDELETING REDIRECT TO HOMEPAGE
@@ -102,7 +102,7 @@ public class UserController {
 
     @PatchMapping("{id}/removeAdminRole")
     public String demoteFromAdmin(@PathVariable Long id) {
-        if(id==1) {
+        if (id == 1) {
             throw new RuntimeException();
         }
 //TODO FINISH HTML PART
