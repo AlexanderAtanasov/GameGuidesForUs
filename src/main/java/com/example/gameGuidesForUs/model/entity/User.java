@@ -1,7 +1,5 @@
 package com.example.gameGuidesForUs.model.entity;
 
-import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
-
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -116,7 +114,5 @@ public class User extends BaseEntity{
         return this;
     }
 
-    public Integer totalComments() {
-       return getAllUserComments().size();
-    }
+
 }

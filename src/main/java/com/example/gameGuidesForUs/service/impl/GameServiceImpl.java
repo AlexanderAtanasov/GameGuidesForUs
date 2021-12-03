@@ -3,13 +3,18 @@ package com.example.gameGuidesForUs.service.impl;
 import com.example.gameGuidesForUs.model.entity.Game;
 import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
 import com.example.gameGuidesForUs.model.view.GameViewModel;
+import com.example.gameGuidesForUs.model.view.HomeViewModel;
 import com.example.gameGuidesForUs.repository.GameRepository;
 import com.example.gameGuidesForUs.service.GameService;
+import com.example.gameGuidesForUs.web.exception.ObjectNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -55,7 +60,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public String findGameScreenshotId(Long id) {
-        String screenshotCloudinaryID = gameRepository.findById(id).orElse(null).getGameScreenshotUrl();
+        String screenshotCloudinaryID = gameRepository.findById(id).orElseThrow(ObjectNotFound::new).getGameScreenshotUrl();
         screenshotCloudinaryID = screenshotCloudinaryID
                 .substring(screenshotCloudinaryID.lastIndexOf("/") + 1,
                         screenshotCloudinaryID.lastIndexOf("."));
@@ -65,8 +70,22 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameViewModel findGameInformationById(Long id) {
-        GameViewModel gameViewModel = modelMapper.map(gameRepository.findById(id).orElse(null), GameViewModel.class);
-        return gameViewModel;
-        //TODO RETURN 404 ERROR HANDLING
+        return modelMapper.map(gameRepository.findById(id).orElseThrow(ObjectNotFound::new), GameViewModel.class);
+    }
+
+    @Override
+    public HomeViewModel getAllGamesForRandomShow() {
+
+        if(gameRepository.findAll().size() >0 ) {
+            List<HomeViewModel> homeViewModelList = gameRepository.findAll().stream()
+                    .map(game -> modelMapper.map(game, HomeViewModel.class)).collect(Collectors.toList());
+            return homeViewModelList.get(ThreadLocalRandom.current().nextInt(0, homeViewModelList.size()));
+        }
+
+       else {
+           return new HomeViewModel();
+        }
+
+
     }
 }

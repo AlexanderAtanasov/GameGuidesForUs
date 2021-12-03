@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 public class OnlineUserServiceImpl implements UserDetailsService {
 
 
-
-
     private final UserRepository userRepository;
 
     public OnlineUserServiceImpl(UserRepository userRepository) {

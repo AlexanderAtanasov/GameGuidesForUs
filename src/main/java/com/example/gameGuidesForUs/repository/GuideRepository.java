@@ -17,4 +17,5 @@ public interface GuideRepository extends JpaRepository<Guide, Long> {
     List<Guide> findAllByGameId(Long gameId);
 
     Optional<Guide> findByGuideTitle(String guideTitle);
+
 }

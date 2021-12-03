@@ -11,14 +11,13 @@ import com.example.gameGuidesForUs.repository.GuideRepository;
 import com.example.gameGuidesForUs.repository.UserRepository;
 import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.ScreenshotService;
+import com.example.gameGuidesForUs.web.exception.ObjectNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,8 +67,6 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public void deleteComment(Long id) {
 
-
-        Optional<Comment> check = commentRepository.findById(id);
         Comment forDeletion = commentRepository.getById(id);
 
         if (forDeletion.getScreenshot() == null) {
@@ -94,7 +91,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentViewModel getCurrentComment(Long commentId) {
         return commentRepository.findById(commentId)
                 .map(comment -> modelMapper.map(comment,CommentViewModel.class))
-                .orElse(null);
+                .orElseThrow(ObjectNotFound::new);
     }
 
     private boolean isAdmin(User user) {

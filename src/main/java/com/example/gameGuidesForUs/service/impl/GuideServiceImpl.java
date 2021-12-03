@@ -11,6 +11,7 @@ import com.example.gameGuidesForUs.repository.GuideRepository;
 import com.example.gameGuidesForUs.repository.UserRepository;
 import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.GuideService;
+import com.example.gameGuidesForUs.web.exception.ObjectNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ public class GuideServiceImpl implements GuideService {
         this.commentRepository = commentRepository;
 
     }
+
 
 
     @Override
@@ -71,15 +73,13 @@ public class GuideServiceImpl implements GuideService {
 
         return guideRepository
                 .findById(id)
-                .map(guide -> modelMapper.map(guide, GuideViewModel.class)).orElse(null);
-        //TODO RETURN 404 PAGE
+                .map(guide -> modelMapper.map(guide, GuideViewModel.class)).orElseThrow(ObjectNotFound::new);
 
     }
 
     @Override
     public void deleteGuide(Long id) {
         guideRepository.deleteById(id);
-
     }
 
     @Override

@@ -14,6 +14,7 @@ public class UserViewModel {
     private Long id;
     private List<UserRoleEntity> roles;
     private Instant registeredOn;
+    private Long currentUserId;
 
     public String getFirstName() {
         return firstName;
@@ -75,6 +76,15 @@ public class UserViewModel {
 
     public UserViewModel setRegisteredOn(Instant registeredOn) {
         this.registeredOn = registeredOn;
+        return this;
+    }
+
+    public Long getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public UserViewModel setCurrentUserId(Long currentUserId) {
+        this.currentUserId = currentUserId;
         return this;
     }
 }

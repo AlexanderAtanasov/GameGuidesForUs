@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head th:replace="fragments/commons::head">
 
 </head>
@@ -10,18 +11,15 @@
 
 </header>
 <main>
-    <div class="jumbotron text-white">
-
-            <script src="/js/app.js"></script>
-            <table style="border: white solid" id="authors-container"></table>
-
-
-
-
-
+    <div class="jumbotron ">
+        <div class="text-white text-lg-center bg-blur">
+        <h3>You're trying to do something than you are not authorized to!</h3>
+        </div>
     </div>
+
 </main>
 <footer th:replace="fragments/commons::footer"></footer>
 </body>
 
 </html>
+

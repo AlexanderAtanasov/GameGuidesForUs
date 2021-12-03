@@ -1,8 +1,8 @@
 package com.example.gameGuidesForUs.service;
 
-import com.example.gameGuidesForUs.model.entity.Comment;
 import com.example.gameGuidesForUs.model.service.CommentAddServiceModel;
 import com.example.gameGuidesForUs.model.view.CommentViewModel;
+import com.example.gameGuidesForUs.service.impl.OnlineUser;
 
 import java.util.List;
 

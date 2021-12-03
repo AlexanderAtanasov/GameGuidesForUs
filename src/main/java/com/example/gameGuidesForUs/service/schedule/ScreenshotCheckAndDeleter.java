@@ -19,9 +19,9 @@ public class ScreenshotCheckAndDeleter {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScreenshotCheckAndDeleter.class);
 
 
-    @Scheduled(cron= "0 0 * * * *") //Test if works //TODO
+    @Scheduled(cron= "0 0 * * * *")
     public void clearScreenshots() {
       screenshotService.findAllScreenshotsWithoutAssignedCommentsAndDeleteThem();
-        LOGGER.info("Hello, from cron scheduller at {}", LocalDateTime.now());
+
     }
 }

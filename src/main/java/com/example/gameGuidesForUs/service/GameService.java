@@ -2,6 +2,7 @@ package com.example.gameGuidesForUs.service;
 
 import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
 import com.example.gameGuidesForUs.model.view.GameViewModel;
+import com.example.gameGuidesForUs.model.view.HomeViewModel;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface GameService {
     String findGameScreenshotId(Long id);
 
     GameViewModel findGameInformationById(Long id);
+
+    HomeViewModel getAllGamesForRandomShow();
 }

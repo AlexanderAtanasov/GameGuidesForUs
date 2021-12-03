@@ -80,4 +80,6 @@ public class CommentViewModel {
         this.screenshot = screenshot;
         return this;
     }
+
+
 }

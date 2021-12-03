@@ -3,8 +3,10 @@ package com.example.gameGuidesForUs.web;
 import com.example.gameGuidesForUs.model.binding.UserRegistrationBindingModel;
 import com.example.gameGuidesForUs.model.service.UserRegistrationServiceModel;
 import com.example.gameGuidesForUs.service.UserService;
+import com.example.gameGuidesForUs.service.impl.OnlineUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,14 +77,18 @@ public class UserController {
 
 
     @GetMapping("/all")
-    public String allUsers(Model model) {
-        model.addAttribute("usersInfo",userService.getAllUsers());
+    public String allUsers(Model model,
+                           @AuthenticationPrincipal OnlineUser currentUser) {
+        model.addAttribute("usersInfo",userService.getAllUsers(currentUser));
         return "users-all";
     }
 
     @DeleteMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
-
+        if(id==1) {
+            throw new RuntimeException();
+        }
+        //TODO IF SELFDELETING REDIRECT TO HOMEPAGE
         userService.deleteUser(id);
         return "redirect:/users/all";
     }
@@ -96,7 +102,10 @@ public class UserController {
 
     @PatchMapping("{id}/removeAdminRole")
     public String demoteFromAdmin(@PathVariable Long id) {
-
+        if(id==1) {
+            throw new RuntimeException();
+        }
+//TODO FINISH HTML PART
         userService.removeAdminRole(id);
         return "redirect:/users/all";
     }

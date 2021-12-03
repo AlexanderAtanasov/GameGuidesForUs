@@ -8,6 +8,7 @@ import com.example.gameGuidesForUs.model.view.UserViewModel;
 import com.example.gameGuidesForUs.repository.UserRepository;
 import com.example.gameGuidesForUs.repository.UserRoleRepository;
 import com.example.gameGuidesForUs.service.UserService;
+import com.example.gameGuidesForUs.web.exception.ObjectNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
@@ -140,10 +140,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserViewModel> getAllUsers() {
+    public List<UserViewModel> getAllUsers(OnlineUser currentUser) {
 
         List<UserViewModel> userViewModels = userRepository.findAll()
-                .stream().map(user -> modelMapper.map(user, UserViewModel.class))
+                .stream().map(user -> {
+                    UserViewModel userViewModel = modelMapper.map(user, UserViewModel.class);
+                    userViewModel
+                            .setCurrentUserId(userRepository
+                                    .findByUsername(currentUser.getUserIdentifier()).orElse(null).getId());
+                    return userViewModel;
+                })
                 .collect(Collectors.toList());
 
         return  userRepository.findAll()
@@ -170,7 +176,7 @@ public class UserServiceImpl implements UserService {
     public void removeAdminRole(Long id) {
 
         UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.USER);
-        User user = userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElseThrow(ObjectNotFound::new);
         user.setRoles(Set.of(userRole));
         userRepository.save(user);
     }
