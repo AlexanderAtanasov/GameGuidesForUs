@@ -32,4 +32,6 @@ public interface UserService {
     void makeUserAnAdmin(Long id);
 
     void removeAdminRole(Long id);
+
+    Long findUserId(String userIdentifier);
 }

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/users")
@@ -84,11 +85,16 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id,
+                             @AuthenticationPrincipal OnlineUser onlineUser) {
         if (id == 1) {
             throw new RuntimeException();
         }
-        //TODO IF SELFDELETING REDIRECT TO HOMEPAGE
+        if (Objects.equals(userService.findUserId(onlineUser.getUserIdentifier()), id)) {
+            userService.deleteUser(id);
+            return "redirect:/users/logout";
+        }
+
         userService.deleteUser(id);
         return "redirect:/users/all";
     }
@@ -101,17 +107,18 @@ public class UserController {
     }
 
     @PatchMapping("{id}/removeAdminRole")
-    public String demoteFromAdmin(@PathVariable Long id) {
+    public String demoteFromAdmin(@PathVariable Long id,
+                                  @AuthenticationPrincipal OnlineUser onlineUser) {
         if (id == 1) {
             throw new RuntimeException();
         }
-//TODO FINISH HTML PART
+        if (Objects.equals(userService.findUserId(onlineUser.getUserIdentifier()), id)) {
+            userService.removeAdminRole(id);
+            return "redirect:/users/logout";
+        }
         userService.removeAdminRole(id);
         return "redirect:/users/all";
     }
 
-
-    //TODO ADMIN SHOULD HAVE ACCESS TO ALL USERS AND BE ABLE TO SWAP THEIR ROLES, PUT IN DROPDOWN
-    // EVENT COULD BE CHECK IF USER COMMENTS AND THE MORE COMMENTS HE HAS, SOME REWARD ETC.
 
 }

@@ -180,4 +180,9 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Set.of(userRole));
         userRepository.save(user);
     }
+
+    @Override
+    public Long findUserId(String userIdentifier) {
+        return userRepository.findByUsername(userIdentifier).get().getId();
+    }
 }
