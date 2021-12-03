@@ -22,7 +22,7 @@ public class HomeController {
     @GetMapping
     public ResponseEntity<HomeViewModel> getRandomGame() {
        HomeViewModel randomGame = gameService.getAllGamesForRandomShow();
-//TODO TRY ADDING LINK
+//TODO TRY ADDING LINK TO ROUTE TO GAME VIEW
         return ResponseEntity.
                 ok(randomGame);
     }
