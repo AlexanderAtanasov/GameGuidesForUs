@@ -1,23 +1,29 @@
 package com.example.gameGuidesForUs.service.impl;
 
-import com.example.gameGuidesForUs.model.entity.Comment;
-import com.example.gameGuidesForUs.model.entity.Guide;
-import com.example.gameGuidesForUs.model.entity.User;
+import com.example.gameGuidesForUs.model.entity.*;
+import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 import com.example.gameGuidesForUs.model.service.CommentAddServiceModel;
+import com.example.gameGuidesForUs.model.view.CommentViewModel;
 import com.example.gameGuidesForUs.repository.CommentRepository;
 import com.example.gameGuidesForUs.repository.GuideRepository;
 import com.example.gameGuidesForUs.repository.UserRepository;
 import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.ScreenshotService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.OngoingStubbing;
 import org.modelmapper.ModelMapper;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,37 +43,115 @@ class CommentServiceImplTest {
 
     private CommentServiceImpl serviceToTest;
     private Comment testComment;
+    private CommentAddServiceModel testCommentAddServiceModel;
+    private UserRoleEntity adminRole;
+    private Guide testGuide;
 
     @BeforeEach
     void init() {
 
         serviceToTest = new CommentServiceImpl(mockCommentRepository, mockUserRepository,
                 mockGuideRepository, mockModelMapper, mockScreenshotService);
+
+        adminRole = new UserRoleEntity();
+        adminRole.setRole(UserRoleEnum.ADMIN);
+
+        testGuide = new Guide();
+        testGuide.setComments(new ArrayList<>())
+                .setDescription("SomeGuideRandomDescr.........")
+                .setCreatedOn(Instant.now())
+                .setGuideTitle("Guide Title....")
+                .setGameId(new Game())
+                .setGuideCreatedBy(new User());
+
         testComment = new Comment();
         testComment.setComment("TestComment")
                 .setGuide(new Guide())
                 .setCommentCreatedBy(new User())
                 .setCreatedOn(Instant.now());
 
+        testCommentAddServiceModel = new CommentAddServiceModel();
+        testCommentAddServiceModel.setComment("TESTCOMMENT...............");
         System.out.println();
     }
 
     @Test
-    void deleteComment() {
+    void testDeleteComment() {
 
+        Comment testComment = this.testComment;
 
+        Mockito.when(mockCommentRepository.getById(testComment.getId())).thenReturn(testComment);
+        Comment byId = mockCommentRepository.getById(testComment.getId());
+        Assertions.assertEquals(byId, testComment);
     }
 
     @Test
-    void addComment() {
+    void testIfAdmin() {
+        User user = new User();
+        user.setRoles(Set.of(adminRole));
+        Assertions.assertTrue(serviceToTest.isAdmin(user));
+    }
 
+    @Test
+    void testIsOwnerOrAdmin() {
+        Comment testComment = this.testComment;
+        User testUser = new User();
+        testUser.setUsername("TestMock");
+        testComment.setCommentCreatedBy(testUser);
+        testUser.setRoles(Set.of(adminRole));
+
+
+        Mockito.when(mockCommentRepository.getById(testComment.getId())).thenReturn(testComment);
+        Mockito.when(mockUserRepository.getByUsername(testUser.getUsername())).thenReturn(testUser);
+
+        Assertions.assertTrue(serviceToTest.isOwnerOrAdmin(testUser.getUsername(), testComment.getId()));
+    }
+
+
+    @Test
+    void testAddComment() {
+        CommentAddServiceModel testCommentAddServiceModel = this.testCommentAddServiceModel;
+        Mockito.when(mockModelMapper.map(testCommentAddServiceModel, Comment.class)).thenReturn(testComment);
 
         Comment testComment = this.testComment;
-        CommentAddServiceModel commentAddServiceModel = mockModelMapper
-                .map(testComment,CommentAddServiceModel.class);
-        serviceToTest.addComment(commentAddServiceModel,1L,"TESTUSER");
-        Mockito.verify(mockCommentRepository,Mockito.times(1))
-                .save(Mockito.any());
+
+        serviceToTest.addComment(testCommentAddServiceModel, testComment.getGuide().getId(), testComment.getCommentCreatedBy().getUsername());
+        Mockito.verify(mockCommentRepository, Mockito.times(1))
+                .save(testComment);
+
+    }
+
+
+    @Test
+    void testFindListOfCommentViewModelsByGuideId() {
+        Guide testGuide = this.testGuide;
+
+        List<CommentViewModel> commentViewModels = new ArrayList<>();
+        List<Comment> commentList = new ArrayList<>();
+        Mockito.when(mockCommentRepository.findAllByGuideIdOrderByCreatedOnDesc(testGuide.getId()))
+                .thenReturn(commentList);
+
+        commentViewModels = commentList.stream()
+                .map(comment -> {
+                    CommentViewModel c = mockModelMapper.map(comment,CommentViewModel.class);
+                    if (comment.getScreenshot() != null) {
+                        {
+                            c.setScreenshot(comment.getScreenshot().getUrl());
+                        }
+                    }
+                            return c;
+                        }).collect(Collectors.toList());
+
+
+
+        serviceToTest.findByGuideId(testGuide.getId());
+
+//        Mockito.verify(mockCommentRepository,Mockito.times(1))
+//                .findAllByGuideIdOrderByCreatedOnDesc(testGuide.getId());
+//        Mockito.when(commentList.stream().map(comment -> {
+//            CommentViewModel c = mockModelMapper.map(comment, CommentViewModel.class);
+//
+//        }))
 
 
     }

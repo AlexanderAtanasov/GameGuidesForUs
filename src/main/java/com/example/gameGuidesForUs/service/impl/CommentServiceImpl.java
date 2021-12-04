@@ -77,8 +77,6 @@ public class CommentServiceImpl implements CommentService {
             commentRepository.deleteById(id);
             screenshotService.deleteScreenshot(screenshotId);
         }
-
-        System.out.println();
     }
 
     @Override
@@ -89,7 +87,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-    private boolean isAdmin(User user) {
+    public boolean isAdmin(User user) {
         return user.
                 getRoles().
                 stream().
