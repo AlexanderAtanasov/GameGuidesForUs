@@ -103,20 +103,6 @@ public class GuideController {
     }
 
 
-    @PostMapping("/comments/{id}/add")
-    public String addComment(@PathVariable Long id,
-                             @Valid CommentAddBindingModel commentAddBindingModel,
-                             @AuthenticationPrincipal OnlineUser currentUser) throws IOException {
-        CommentAddServiceModel commentAddServiceModel = modelMapper.map(commentAddBindingModel, CommentAddServiceModel.class);
-        if (!commentAddBindingModel.getScreenshot().isEmpty()) {
-            commentAddServiceModel
-                    .setScreenshot(screenshotService
-                            .addScreenshot(commentAddBindingModel.getScreenshot(),
-                                    currentUser.getUserIdentifier()));
-        }
-        commentService.addComment(commentAddServiceModel, id, currentUser.getUserIdentifier());
 
-        return "redirect:/games/guides/{id}/view";
-    }
 
 }
