@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-sasasasadsadasda50005050505050
-<body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="fragments/commons::head">
 
+</head>
+
+<body class="body-main">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main>
+    <div class="jumbotron">
+        <div class="text-white text-lg-center bg-blur">
+            <h3>Oops....Something went wrong.</h3>
+            <ul>
+                <li>Go back to the games page <a href="/games/all">here</a>.</li>
+                <li>Go back to the home page <a href="/">here</a>.</li>
+            </ul>
+        </div>
+    </div>
+
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
 </body>
+
 </html>
+
