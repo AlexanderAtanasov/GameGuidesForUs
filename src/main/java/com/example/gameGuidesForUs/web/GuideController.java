@@ -72,21 +72,32 @@ public class GuideController {
     }
 
     @GetMapping("/guides/{id}/view")
-    public String viewGuide(@PathVariable Long id, Model model) {
+    public String viewGuide(@PathVariable Long id, Model model,
+                            @AuthenticationPrincipal OnlineUser currentUser) {
+
+
         List<CommentViewModel> byGuideId = commentService.findByGuideId(id);
         model.addAttribute("currentGuide", guideService.findGuideById(id));
         model.addAttribute("allCommentsForTheGuide", commentService.findByGuideId(id));
-
+        if (currentUser != null) {
+            model.addAttribute("isAdminOrOwnerForGuide", guideService.
+                    findIfUserIsAdminOrOwner(currentUser.getUserIdentifier(), id));
+        }
         return "guide-view";
     }
 
 
     @DeleteMapping("guides/{id}/delete")
-    public String deleteGuide(@PathVariable Long id, Model model) {
+    public String deleteGuide(@PathVariable Long id, Model model,
+                              @AuthenticationPrincipal OnlineUser currentUser) {
 
         Long gameOfTheGuide = guideService.getGameOfTheGuide(id);
-        guideService.deleteGuide(id);
-        //TODO GUIDE DELETE IF USER IS OWNER OR ADMIN
+        if (currentUser != null) {
+            if (guideService.
+                    findIfUserIsAdminOrOwner(currentUser.getUserIdentifier(), id)) {
+                guideService.deleteGuide(id);
+            }
+        }
         String returnString = "redirect:/games/" + gameOfTheGuide + "/view";
         return returnString;
     }
@@ -95,7 +106,7 @@ public class GuideController {
     @PostMapping("/comments/{id}/add")
     public String addComment(@PathVariable Long id,
                              @Valid CommentAddBindingModel commentAddBindingModel,
-                             @AuthenticationPrincipal OnlineUser currentUser ) throws IOException {
+                             @AuthenticationPrincipal OnlineUser currentUser) throws IOException {
         CommentAddServiceModel commentAddServiceModel = modelMapper.map(commentAddBindingModel, CommentAddServiceModel.class);
         if (!commentAddBindingModel.getScreenshot().isEmpty()) {
             commentAddServiceModel

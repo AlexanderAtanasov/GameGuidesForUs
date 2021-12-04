@@ -88,14 +88,6 @@ public class CommentServiceImpl implements CommentService {
         return  comment.getCommentCreatedBy().getId() == user.getId() || isAdmin(user) ;
     }
 
-    @Override
-    public CommentViewModel getCurrentComment(Long commentId) {
-        return commentRepository.findById(commentId)
-                .map(comment -> modelMapper.map(comment,CommentViewModel.class))
-                .orElseThrow(ObjectNotFound::new);
-    }
-
-
 
     private boolean isAdmin(User user) {
         return user.

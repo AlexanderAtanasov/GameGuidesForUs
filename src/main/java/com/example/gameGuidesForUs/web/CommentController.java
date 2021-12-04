@@ -1,16 +1,11 @@
 package com.example.gameGuidesForUs.web;
 
 import com.example.gameGuidesForUs.model.binding.CommentAddBindingModel;
-import com.example.gameGuidesForUs.model.binding.CommentUpdateBindingModel;
-import com.example.gameGuidesForUs.model.view.CurrentCommentView;
-import com.example.gameGuidesForUs.model.view.HomeViewModel;
 import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.UserService;
 import com.example.gameGuidesForUs.service.impl.OnlineUser;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -30,27 +25,8 @@ public class CommentController {
         return  new CommentAddBindingModel();
     }
 
-    @ModelAttribute
-    public CommentUpdateBindingModel commentUpdateBindingModel() {
-        return new CommentUpdateBindingModel();
-    }
 
 
-    @GetMapping("/comments/{guideId}/update/{commentId}")
-    public String updateComment(@PathVariable Long guideId, @PathVariable Long commentId,
-                                @AuthenticationPrincipal OnlineUser currentUser,
-                                Model model) {
-        model.addAttribute("currentComment", commentService.getCurrentComment(commentId));
-
-        return "comment";
-    }
-
-    @PatchMapping("/comments/{guideId}/update/{commentId}")
-    public String updateCommentConfirm(@PathVariable Long guideId, @PathVariable Long commentId,
-                                @AuthenticationPrincipal OnlineUser currentUser) {
-
-        return "redirect:/games/guides/{guideId}/view";
-    }
 
     @DeleteMapping("/comments/{guideId}/delete/{commentId}")
     public String DeleteComment(@PathVariable Long guideId, @PathVariable Long commentId,

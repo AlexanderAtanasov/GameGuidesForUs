@@ -1,5 +1,6 @@
 package com.example.gameGuidesForUs.web;
 
+import com.example.gameGuidesForUs.model.binding.UserPasswordUpdateBindingModel;
 import com.example.gameGuidesForUs.model.binding.UserRegistrationBindingModel;
 import com.example.gameGuidesForUs.model.service.UserRegistrationServiceModel;
 import com.example.gameGuidesForUs.service.UserService;
@@ -46,11 +47,6 @@ public class UserController {
         return "redirect:login";
     }
 
-
-    @ModelAttribute
-    public UserRegistrationBindingModel userRegistrationBindingModel() {
-        return new UserRegistrationBindingModel();
-    }
 
     @GetMapping("/register")
     public String register() {
@@ -121,4 +117,57 @@ public class UserController {
     }
 
 
+    @GetMapping("/changepassword")
+    public String passwordChange(Model model) {
+        if (!model.containsAttribute("passwordDoesNotMatchTheOldOne")) {
+            model.addAttribute("passwordDoesNotMatchTheOldOne", false);
+        }
+        return "password-change";
+
+    }
+
+    @PostMapping("/changepassword")
+    public String passwordChangeConfirm(@Valid UserPasswordUpdateBindingModel userPasswordUpdateBindingModel,
+                                        BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                        @AuthenticationPrincipal OnlineUser onlineUser) {
+
+        if (onlineUser != null) {
+
+            if (bindingResult.hasErrors() || !userPasswordUpdateBindingModel.getNewPassword()
+                    .equals(userPasswordUpdateBindingModel.getConfirmNewPassword())) {
+                redirectAttributes.addFlashAttribute("userPasswordUpdateBindingModel",
+                                userPasswordUpdateBindingModel)
+                        .addFlashAttribute("org.springframework.validation.BindingResult" +
+                                        ".userPasswordUpdateBindingModel",
+                                bindingResult);
+
+
+                return "redirect:changepassword";
+
+            }
+            if (!userService.checkIfPasswordMatch(onlineUser,
+                    userPasswordUpdateBindingModel.getNewPassword())) {
+                redirectAttributes.addFlashAttribute("userPasswordUpdateBindingModel",
+                                userPasswordUpdateBindingModel)
+                        .addFlashAttribute("passwordDoesNotMatchTheOldOne", true);
+                return "redirect:changepassword";
+            }
+
+            System.out.println();
+            userService.changePassword(onlineUser, userPasswordUpdateBindingModel.getNewPassword());
+
+        }
+        return "redirect:/users/logout";
+    }
+
+
+    @ModelAttribute
+    public UserRegistrationBindingModel userRegistrationBindingModel() {
+        return new UserRegistrationBindingModel();
+    }
+
+    @ModelAttribute
+    public UserPasswordUpdateBindingModel userPasswordUpdateBindingModel() {
+        return new UserPasswordUpdateBindingModel();
+    }
 }

@@ -98,6 +98,19 @@ body {
     margin-left: 4px;
 }
 
+.form-group.cngPwd {
+    text-align: center;
+    width:50%;
+    margin-left:25%;
+    margin-right:25%;
+}
+
+.cngPwd_btn{
+    color: black;
+    background-color: #FFC312;
+
+}
+
 .form-group.log_btn{
     text-align: center;
     width:50%;

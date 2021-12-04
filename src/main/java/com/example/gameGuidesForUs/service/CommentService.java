@@ -19,7 +19,7 @@ public interface CommentService {
 
     boolean isOwnerOrAdmin(String userIdentifier, Long commentId);
 
-    CommentViewModel getCurrentComment(Long commentId);
+
 
 
 

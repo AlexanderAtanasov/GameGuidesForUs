@@ -3,6 +3,7 @@ package com.example.gameGuidesForUs.service;
 import com.example.gameGuidesForUs.model.service.GuideAddServiceModel;
 import com.example.gameGuidesForUs.model.view.GuideListViewModel;
 import com.example.gameGuidesForUs.model.view.GuideViewModel;
+import com.example.gameGuidesForUs.service.impl.OnlineUser;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface GuideService {
     void deleteGuide(Long id);
 
     Long getGameOfTheGuide(Long id);
+
+    Boolean findIfUserIsAdminOrOwner(String currentUser, Long id);
 }

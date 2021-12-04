@@ -43,9 +43,10 @@
                             <p th:text="*{description}"></p>
                         </div>
                         <div class="d-flex justify-content-center links">
-                            <th:block sec:authorize="hasRole('ADMIN')">
+                            <th:block th:if="${isAdminOrOwnerForGuide}">
                                 <form th:action="@{/games/guides/{id}/delete(id=*{id})}" th:method="delete">
-                                    <input type="submit" class="btn btn-sm btn-outline-secondary text-dark" value="Delete Guide"/>
+                                    <input type="submit" class="btn btn-sm btn-outline-secondary text-dark"
+                                           value="Delete Guide"/>
                                 </form>
                             </th:block>
                         </div>
@@ -58,13 +59,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4" th:each="c : ${allCommentsForTheGuide}"
-                    th:with="commentId=${c.id}">
+                         th:with="commentId=${c.id}">
                         <div class="card-header">
                             <div class="media flex-wrap w-100 align-items-center">
                                 <div class="card-text media-body ">
-                                    <a
-                                            data-abc="true"
-                                            th:utext="*{c.commentCreatedBy.firstName} + ' ' +*{c.commentCreatedBy.lastName}">Creator</a>
+                                    <a data-abc="true"
+                                       th:utext="*{c.commentCreatedBy.firstName} + ' ' +*{c.commentCreatedBy.lastName}">Creator</a>
                                     <div class="text-muted small"
                                          th:text="|Comment created on: *{#dates.format(c.createdOn, 'dd-MM-yyyy HH:mm:ss')}|"></div>
                                 </div>
@@ -87,15 +87,10 @@
                             <div class="card-footer">
                                 <div class="d-flex justify-content-center links">
                                     <th:block sec:authorize="hasRole('ADMIN')">
-                                        <form th:action="@{/comments/{guideId}/update/{commentId}(guideId=*{id}, commentId=*{commentId})}" >
-                                            <input type="submit" class="btn btn-sm btn-outline-secondary text-dark" value="Update Comment"/>
-                                        </form>
-                                    </th:block>
-                                </div>
-                                <div class="d-flex justify-content-center links">
-                                    <th:block sec:authorize="hasRole('ADMIN')">
-                                        <form th:action="@{/comments/{guideId}/delete/{commentId}(guideId=*{id}, commentId=*{commentId})}" th:method="DELETE">
-                                            <input type="submit" class="btn btn-sm btn-outline-secondary text-dark" value="Delete Comment"/>
+                                        <form th:action="@{/comments/{guideId}/delete/{commentId}(guideId=*{id}, commentId=*{commentId})}"
+                                              th:method="DELETE">
+                                            <input type="submit" class="btn btn-sm btn-outline-secondary text-dark"
+                                                   value="Delete Comment"/>
                                         </form>
                                     </th:block>
                                 </div>

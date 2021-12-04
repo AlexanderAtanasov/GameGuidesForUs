@@ -152,8 +152,8 @@ public class UserServiceImpl implements UserService {
                 })
                 .collect(Collectors.toList());
 
-        return  userRepository.findAll()
-                .stream().map(user -> modelMapper.map(user,UserViewModel.class))
+        return userRepository.findAll()
+                .stream().map(user -> modelMapper.map(user, UserViewModel.class))
                 .collect(Collectors.toList());
     }
 
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
         UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ADMIN);
         UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.USER);
         User user = userRepository.findById(id).orElse(null);
-        user.setRoles(Set.of(adminRole,userRole));
+        user.setRoles(Set.of(adminRole, userRole));
         userRepository.save(user);
     }
 
@@ -185,4 +185,25 @@ public class UserServiceImpl implements UserService {
     public Long findUserId(String userIdentifier) {
         return userRepository.findByUsername(userIdentifier).get().getId();
     }
+
+    @Override
+    public void changePassword(OnlineUser onlineUser, String newPassword) {
+
+        User user = userRepository.findByUsername(onlineUser.getUserIdentifier()).get();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
+    @Override
+    public boolean checkIfPasswordMatch(OnlineUser onlineUser, String newPassword) {
+
+        return passwordEncoder.matches(newPassword,
+                userRepository
+                        .findByUsername(onlineUser.getUserIdentifier())
+                        .get()
+                        .getPassword());
+
+    }
+
+
 }
