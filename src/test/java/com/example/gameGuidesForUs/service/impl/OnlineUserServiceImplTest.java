@@ -69,4 +69,5 @@ public class OnlineUserServiceImplTest {
 
       Assertions.assertEquals(expectedAuth,authorities);
     }
+
 }

@@ -54,7 +54,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void addComment(CommentAddServiceModel commentAddServiceModel, Long guideId, String username) {
 
-        List<Comment> all = commentRepository.findAll();
+
         Comment comment = modelMapper.map(commentAddServiceModel, Comment.class);
 
         comment.setGuide(guideRepository.getById(guideId))
