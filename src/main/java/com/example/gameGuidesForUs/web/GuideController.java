@@ -80,7 +80,7 @@ public class GuideController {
         model.addAttribute("currentGuide", guideService.findGuideById(id));
         model.addAttribute("allCommentsForTheGuide", commentService.findByGuideId(id));
         if (currentUser != null) {
-            model.addAttribute("isAdminOrOwnerForGuide", guideService.
+            model.addAttribute("isAdminOrOwner", guideService.
                     findIfUserIsAdminOrOwner(currentUser.getUserIdentifier(), id));
         }
         return "guide-view";
@@ -103,6 +103,20 @@ public class GuideController {
     }
 
 
+    @PostMapping("/comments/{id}/add")
+    public String addComment(@PathVariable Long id,
+                             @Valid CommentAddBindingModel commentAddBindingModel,
+                             @AuthenticationPrincipal OnlineUser currentUser) throws IOException {
+        CommentAddServiceModel commentAddServiceModel = modelMapper.map(commentAddBindingModel, CommentAddServiceModel.class);
+        if (!commentAddBindingModel.getScreenshot().isEmpty()) {
+            commentAddServiceModel
+                    .setScreenshot(screenshotService
+                            .addScreenshot(commentAddBindingModel.getScreenshot(),
+                                    currentUser.getUserIdentifier()));
+        }
+        commentService.addComment(commentAddServiceModel, id, currentUser.getUserIdentifier());
 
+        return "redirect:/games/guides/{id}/view";
+    }
 
 }
