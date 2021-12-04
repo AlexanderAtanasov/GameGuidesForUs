@@ -2,9 +2,12 @@ package com.example.gameGuidesForUs.web;
 
 import com.example.gameGuidesForUs.model.binding.CommentAddBindingModel;
 import com.example.gameGuidesForUs.model.binding.CommentUpdateBindingModel;
+import com.example.gameGuidesForUs.model.view.CurrentCommentView;
+import com.example.gameGuidesForUs.model.view.HomeViewModel;
 import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.UserService;
 import com.example.gameGuidesForUs.service.impl.OnlineUser;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,4 +66,10 @@ public class CommentController {
 
 
     //TODO CREATE UPDATE COMMENT SECTION FOR ONLY ADMIN OR CREATOR
+
+
+
+
+
+
 }

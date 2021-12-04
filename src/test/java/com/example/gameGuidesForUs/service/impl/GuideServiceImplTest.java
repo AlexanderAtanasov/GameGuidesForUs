@@ -6,10 +6,12 @@ import com.example.gameGuidesForUs.model.entity.User;
 import com.example.gameGuidesForUs.model.entity.UserRoleEntity;
 import com.example.gameGuidesForUs.model.entity.enums.GenreEnum;
 import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
+import com.example.gameGuidesForUs.model.service.GuideAddServiceModel;
 import com.example.gameGuidesForUs.repository.CommentRepository;
 import com.example.gameGuidesForUs.repository.GameRepository;
 import com.example.gameGuidesForUs.repository.GuideRepository;
 import com.example.gameGuidesForUs.repository.UserRepository;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +37,7 @@ class GuideServiceImplTest {
     private User testUser;
     private Game testGame;
     private UserRoleEntity adminRole, userRole;
+    private GuideServiceImpl serviceToTest;
 
     @Mock
     private ModelMapper mockModelMapper;
@@ -45,46 +48,12 @@ class GuideServiceImplTest {
     @Mock
     private CommentRepository mockCommentRepository;
 
-    @MockBean
+    @Mock
     private GuideRepository mockGuideRepository;
 
     @BeforeEach
-    void init() {
-
-        adminRole = new UserRoleEntity();
-        adminRole.setRole(UserRoleEnum.ADMIN);
-        userRole = new UserRoleEntity();
-        userRole.setRole(UserRoleEnum.USER);
-
-        testUser = new User();
-        testUser.setUsername("TestMock")
-                .setFirstName("Mocki")
-                .setLastName("Mockev")
-                .setPassword("testmock")
-                .setEmail("testmock@test.com")
-                .setRegisteredOn(Instant.now())
-                .setGuides(new ArrayList<>())
-                .setRoles(Set.of(adminRole, userRole));
-
-        testGame = new Game();
-        testGame.setGameDescription("TestGameForMocking")
-                .setGenre(GenreEnum.MOBA)
-                .setGameTitle("MockitoTesting")
-                .setGuides(new ArrayList<>())
-                .setReleasedOn(LocalDate.now());
-
-        testGuide = new Guide();
-        testGuide.setGameId(testGame)
-                .setGuideCreatedBy(testUser)
-                .setCreatedOn(Instant.now())
-                .setDescription("TestMockiTestTestMockiTestTestMockiTest")
-                .setGuideTitle("TestGuideTitle")
-                .setComments(new ArrayList<>())
-                .setId(1L);
-        System.out.printf("");
-        mockGuideRepository.save(testGuide);
-        System.out.println();
-
+    void setUp() {
+      serviceToTest = new GuideServiceImpl(mockModelMapper,mockGuideRepository,mockUserRepository,mockGameRepository,mockCommentRepository);
     }
 
 
@@ -102,10 +71,19 @@ class GuideServiceImplTest {
     @Test
     void addGuide() {
 
+        GuideAddServiceModel guideAddServiceModel = new GuideAddServiceModel();
+        guideAddServiceModel.setGuideTitle("TestGuideTitle")
+                .setComments(new ArrayList<>())
+                .setGuideCreatedBy("TestUser")
+                .setGameId(1L)
+                .setCreatedOn(Instant.now())
+                .setDescription("TestMockiTestTestMockiTestTestMockiTest");
 
-        long countBefore = mockGuideRepository.count();
-        mockGuideRepository.save(testGuide);
-        Assertions.assertEquals(countBefore+1,mockGuideRepository.count());
+        Mockito.when(mockGuideRepository.save(mockModelMapper.map(guideAddServiceModel,Guide.class)))
+                .thenReturn(mockGuideRepository.findByGuideTitle("TestGuideTitle").get());
+
+//        this.mockGuideRepository.save(testGuide);
+//        Assertions.assertEquals(1,this.mockGuideRepository.count());
 
 
     }

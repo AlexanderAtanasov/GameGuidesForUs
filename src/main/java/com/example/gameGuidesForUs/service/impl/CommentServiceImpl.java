@@ -6,6 +6,7 @@ import com.example.gameGuidesForUs.model.entity.UserRoleEntity;
 import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 import com.example.gameGuidesForUs.model.service.CommentAddServiceModel;
 import com.example.gameGuidesForUs.model.view.CommentViewModel;
+import com.example.gameGuidesForUs.model.view.CurrentCommentView;
 import com.example.gameGuidesForUs.repository.CommentRepository;
 import com.example.gameGuidesForUs.repository.GuideRepository;
 import com.example.gameGuidesForUs.repository.UserRepository;
@@ -93,6 +94,8 @@ public class CommentServiceImpl implements CommentService {
                 .map(comment -> modelMapper.map(comment,CommentViewModel.class))
                 .orElseThrow(ObjectNotFound::new);
     }
+
+
 
     private boolean isAdmin(User user) {
         return user.

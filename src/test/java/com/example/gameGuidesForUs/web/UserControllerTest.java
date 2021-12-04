@@ -40,6 +40,7 @@ class UserControllerTest {
     private final String TEST_PASSWORD = "12345";
     private final String TEST_CONFIRM_PASSWORD = "12345";
 
+
     @Autowired
     private MockMvc mockMvc;
 
