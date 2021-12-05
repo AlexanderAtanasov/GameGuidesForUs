@@ -32,6 +32,11 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+    @GetMapping("/logout-timeout")
+    public String timeout() {
+
+        return "redirect:login";
+    }
 
     @GetMapping("/login")
     public String log() {
