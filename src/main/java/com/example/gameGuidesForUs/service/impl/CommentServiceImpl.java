@@ -6,13 +6,11 @@ import com.example.gameGuidesForUs.model.entity.UserRoleEntity;
 import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 import com.example.gameGuidesForUs.model.service.CommentAddServiceModel;
 import com.example.gameGuidesForUs.model.view.CommentViewModel;
-import com.example.gameGuidesForUs.model.view.CurrentCommentView;
 import com.example.gameGuidesForUs.repository.CommentRepository;
 import com.example.gameGuidesForUs.repository.GuideRepository;
 import com.example.gameGuidesForUs.repository.UserRepository;
 import com.example.gameGuidesForUs.service.CommentService;
 import com.example.gameGuidesForUs.service.ScreenshotService;
-import com.example.gameGuidesForUs.web.exception.ObjectNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
