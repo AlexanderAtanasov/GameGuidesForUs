@@ -4,21 +4,37 @@ import com.example.gameGuidesForUs.model.entity.Game;
 import com.example.gameGuidesForUs.model.entity.User;
 import com.example.gameGuidesForUs.model.entity.enums.GenreEnum;
 import com.example.gameGuidesForUs.model.service.GameAddServiceModel;
+import com.example.gameGuidesForUs.model.view.GameViewModel;
+import com.example.gameGuidesForUs.model.view.HomeViewModel;
 import com.example.gameGuidesForUs.repository.GameRepository;
+import com.example.gameGuidesForUs.web.exception.ObjectNotFound;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.ApplicationContextException;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class GameServiceImplTest {
@@ -34,7 +50,7 @@ class GameServiceImplTest {
 
     @BeforeEach
     void init() {
-        serviceToTest = new GameServiceImpl(mockedGameRepository,mockedModelMapper);
+        serviceToTest = new GameServiceImpl(mockedGameRepository, mockedModelMapper);
         testGame = new Game();
         testGame.setGameTitle("TestGame")
                 .setGuides(new ArrayList<>())
@@ -51,7 +67,7 @@ class GameServiceImplTest {
 
         serviceToTest.deleteGame(testGame.getId());
 
-        Mockito.verify(mockedGameRepository,Mockito.times(1)).deleteById(testGame.getId());
+        Mockito.verify(mockedGameRepository, Mockito.times(1)).deleteById(testGame.getId());
 
     }
 
@@ -61,7 +77,7 @@ class GameServiceImplTest {
         Game testGame = this.testGame;
 
         serviceToTest.isGameTitleFree(testGame.getGameTitle());
-        Mockito.verify(mockedGameRepository,Mockito.times(1))
+        Mockito.verify(mockedGameRepository, Mockito.times(1))
                 .findByGameTitle(testGame.getGameTitle());
 
     }
@@ -69,12 +85,64 @@ class GameServiceImplTest {
     @Test
     void testAddGame() {
         Game testGame = this.testGame;
-        GameAddServiceModel gameAddServiceModel = mockedModelMapper.map(testGame,GameAddServiceModel.class);
-      serviceToTest.addGame(gameAddServiceModel);
+        GameAddServiceModel gameAddServiceModel = mockedModelMapper.map(testGame, GameAddServiceModel.class);
+        serviceToTest.addGame(gameAddServiceModel);
 
         Mockito.verify(mockedGameRepository, Mockito.times(1)).save(Mockito.any());
 
     }
 
+    @Test
+    void testGetGameCount() {
+        serviceToTest.getTotalGameCount();
+        Mockito.verify(mockedGameRepository, Mockito.times(1))
+                .count();
+    }
 
+    @Test
+    void testGetAllGamesSortedByReleaseDate() {
+        List<GameViewModel> testGameViewModelList = new ArrayList<>();
+        serviceToTest.findAllGamesSortByReleaseDateDesc();
+    }
+
+    @Test
+    void testFindScreenshotId() {
+        Game testGame = this.testGame;
+        String testScreenshotUrl= "Some Url Test.anotheru/rlf/tests.com";
+
+        ObjectNotFound throwsObjNF = Assertions.assertThrows(ObjectNotFound.class, () -> {
+
+            Mockito.when(serviceToTest.findGameScreenshotId(testGame.getId())).thenReturn(testScreenshotUrl);
+        });
+    }
+
+    @Test
+    void testFindGameInformationById() {
+        Game testGame = this.testGame;
+        ObjectNotFound throwsObjNF = Assertions.assertThrows(ObjectNotFound.class, () -> {
+            serviceToTest.findGameInformationById(testGame.getId());
+        });
+    }
+
+
+    @Test
+    void testGetAllGamesForRandomPresentation() {
+        HomeViewModel testHomeView = new HomeViewModel();
+        List<HomeViewModel> testList = new ArrayList<>();
+        testList.add(new HomeViewModel());
+        testList.add(new HomeViewModel());
+        testList.add(new HomeViewModel());
+        serviceToTest.getAllGamesForRandomShow();
+
+//        IndexOutOfBoundsException throwsIOOB = Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+//
+//  Mockito.when(mockedGameRepository.findAll().stream()
+//                .map(game -> mockedModelMapper.map(game, HomeViewModel.class)).collect(Collectors.toList())
+//                  .get(ThreadLocalRandom.current().nextInt(0,testList.size())))
+//          .thenReturn(testList.get(ThreadLocalRandom.current().nextInt(0,testList.size())));
+//        });
+
+
+
+    }
 }

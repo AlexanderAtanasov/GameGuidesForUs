@@ -83,6 +83,11 @@ class CommentServiceImplTest {
         Mockito.when(mockCommentRepository.getById(testComment.getId())).thenReturn(testComment);
         Comment byId = mockCommentRepository.getById(testComment.getId());
         Assertions.assertEquals(byId, testComment);
+        serviceToTest.deleteComment(testComment.getId());
+////        Long testScreenshotId = mockCommentRepository.getById(testComment.getId()).getScreenshot().getId();
+//        mockCommentRepository.deleteById(testComment.getId());
+//        mockScreenshotService.deleteScreenshot(testComment.getScreenshot().getId());
+//        Mockito.verify(mockCommentRepository, Mockito.times(1)).deleteById(testComment.getId());
     }
 
     @Test
@@ -121,37 +126,39 @@ class CommentServiceImplTest {
 
     }
 
+    @Test
+    void testDeletionOfCommentById() {
+
+        Comment testComment = this.testComment;
+        Mockito.when(mockCommentRepository.getById(testComment.getId()))
+                .thenReturn(testComment);
+        serviceToTest.deleteComment(testComment.getId());
+    }
 
     @Test
     void testFindListOfCommentViewModelsByGuideId() {
         Guide testGuide = this.testGuide;
 
         List<CommentViewModel> commentViewModels = new ArrayList<>();
-        List<Comment> commentList = new ArrayList<>();
-        Mockito.when(mockCommentRepository.findAllByGuideIdOrderByCreatedOnDesc(testGuide.getId()))
-                .thenReturn(commentList);
-
-        commentViewModels = commentList.stream()
-                .map(comment -> {
-                    CommentViewModel c = mockModelMapper.map(comment,CommentViewModel.class);
-                    if (comment.getScreenshot() != null) {
-                        {
-                            c.setScreenshot(comment.getScreenshot().getUrl());
-                        }
-                    }
-                            return c;
-                        }).collect(Collectors.toList());
-
-
-
+//        List<Comment> commentList = new ArrayList<>();
+//        Mockito.when(mockCommentRepository.findAllByGuideIdOrderByCreatedOnDesc(testGuide.getId()))
+//                .thenReturn(commentList);
+//
+//        commentViewModels = commentList.stream()
+//                .map(comment -> {
+//                    CommentViewModel c = mockModelMapper.map(comment, CommentViewModel.class);
+//                    if (comment.getScreenshot() != null) {
+//                        {
+//                            c.setScreenshot(comment.getScreenshot().getUrl());
+//                        }
+//                    }
+//                    return c;
+//                }).collect(Collectors.toList());
+//
+//
         serviceToTest.findByGuideId(testGuide.getId());
 
-//        Mockito.verify(mockCommentRepository,Mockito.times(1))
-//                .findAllByGuideIdOrderByCreatedOnDesc(testGuide.getId());
-//        Mockito.when(commentList.stream().map(comment -> {
-//            CommentViewModel c = mockModelMapper.map(comment, CommentViewModel.class);
-//
-//        }))
+
 
 
     }

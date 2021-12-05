@@ -27,18 +27,15 @@ public class GuideServiceImpl implements GuideService {
     private final GuideRepository guideRepository;
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
-    private final CommentRepository commentRepository;
+
 
 
     public GuideServiceImpl(ModelMapper modelMapper, GuideRepository guideRepository,
-                            UserRepository userRepository, GameRepository gameRepository,
-                            CommentRepository commentRepository) {
+                            UserRepository userRepository, GameRepository gameRepository) {
         this.modelMapper = modelMapper;
         this.guideRepository = guideRepository;
         this.userRepository = userRepository;
         this.gameRepository = gameRepository;
-        this.commentRepository = commentRepository;
-
     }
 
 
