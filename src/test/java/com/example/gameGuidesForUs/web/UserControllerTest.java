@@ -1,37 +1,31 @@
 package com.example.gameGuidesForUs.web;
 
 import com.example.gameGuidesForUs.model.entity.User;
+import com.example.gameGuidesForUs.model.entity.UserRoleEntity;
+import com.example.gameGuidesForUs.model.entity.enums.UserRoleEnum;
 import com.example.gameGuidesForUs.repository.UserRepository;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
-
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.Instant;
-import java.util.Optional;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -54,9 +48,31 @@ class UserControllerTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    private User testUser;
+    private UserRoleEntity adminRole, userRole;
+
     @BeforeEach
     void setUp() {
-        Mockito.mock(UserRepository.class);
+
+        adminRole = new UserRoleEntity();
+        adminRole.setRole(UserRoleEnum.ADMIN);
+        userRole = new UserRoleEntity();
+        userRole.setRole(UserRoleEnum.USER);
+
+//        testUser = new User();
+//        testUser.setUsername(TEST_USERNAME)
+//                .setRoles(Set.of(userRole))
+//                .setRegisteredOn(Instant.now())
+//                .setFirstName(TEST_LAST_NAME)
+//                .setLastName(TEST_LAST_NAME)
+//                .setEmail(TEST_EMAIL)
+//                .setGuides(new ArrayList<>())
+//                .setAllUserComments(new ArrayList<>()).setId(1L);
+//        testUser.setPassword(passwordEncoder.encode(TEST_PASSWORD));
+//
+
+
     }
 
     @Test
@@ -76,31 +92,70 @@ class UserControllerTest {
 
 
     @Test
-    void testRegisterUser() throws Exception {
+    void testRegisterUserSuccess() throws Exception {
 
-        long initialUserCount = userRepository.count();
+
         mockMvc.perform(post("/users/register")
-                .param("firstName", TEST_FIRST_NAME)
-                .param("lastName", TEST_LAST_NAME)
-                .param("username", TEST_USERNAME).accept(TEST_USERNAME)
+                .param("username", TEST_USERNAME)
                 .param("password", TEST_PASSWORD)
                 .param("confirmPassword", TEST_CONFIRM_PASSWORD)
-                .param("email", "mocktest@test.com").accept(TEST_EMAIL)
-                .with(csrf())
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-        ).andExpect(status().is3xxRedirection());
+                .param("firstName", TEST_FIRST_NAME)
+                .param("lastName", TEST_LAST_NAME)
+                .param("email", TEST_EMAIL)
+                .with(csrf())).andExpect(status().is3xxRedirection());
 
-        Assertions.assertEquals(initialUserCount + 1, userRepository.count());
+        User newUser = userRepository.findByUsername(TEST_USERNAME).get();
 
-        Optional<User> newUser = userRepository.findByUsername(TEST_USERNAME);
-        newUser.get().setRegisteredOn(Instant.now());
-        Assertions.assertTrue(newUser.isPresent());
-        Assertions.assertEquals(TEST_USERNAME, newUser.get().getUsername());
-        Assertions.assertEquals(TEST_FIRST_NAME, newUser.get().getFirstName());
-        Assertions.assertEquals(TEST_LAST_NAME, newUser.get().getLastName());
-        Assertions.assertEquals(TEST_EMAIL, newUser.get().getEmail());
+        Assertions.assertEquals(newUser.getUsername(), TEST_USERNAME);
+        Assertions.assertEquals(newUser.getEmail(), TEST_EMAIL);
 
-        userRepository.deleteById(newUser.get().getId());
+    }
+
+    @Test
+    void testRegisterDifferentPasswords() throws Exception {
+
+        mockMvc.perform(post("/users/register")
+                        .param("username", TEST_USERNAME)
+                        .param("password", TEST_PASSWORD)
+                        .param("confirmPassword", "TESTPASSWORD")
+                        .param("firstName", TEST_FIRST_NAME)
+                        .param("lastName", TEST_LAST_NAME)
+                        .param("email", TEST_EMAIL)
+                        .with(csrf())).andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:register"));
+
+    }
+
+
+    @Test
+    void testLoginUser() throws Exception {
+        passwordEncoder = new Pbkdf2PasswordEncoder();
+        adminRole = new UserRoleEntity();
+        adminRole.setRole(UserRoleEnum.ADMIN);
+        userRole = new UserRoleEntity();
+        userRole.setRole(UserRoleEnum.USER);
+
+        User newUser = new User();
+        newUser.setUsername(TEST_USERNAME)
+                .setFirstName(TEST_LAST_NAME)
+                .setLastName(TEST_LAST_NAME)
+                .setEmail(TEST_EMAIL)
+                .setGuides(new ArrayList<>())
+                .setRegisteredOn(Instant.now())
+//                .setRoles(Set.of(adminRole, userRole))
+                .setAllUserComments(new ArrayList<>())
+                .setPassword(passwordEncoder.encode(TEST_PASSWORD));
+
+
+
+
+        Assertions.assertEquals(newUser.getUsername(), TEST_USERNAME);
+        Assertions.assertEquals(newUser.getEmail(), TEST_EMAIL);
+
+        mockMvc.perform(post("/users/login").//
+                param("username", TEST_USERNAME).//
+                param("password", TEST_PASSWORD).//
+                with(csrf())).andExpect(status().isOk());
     }
 
 

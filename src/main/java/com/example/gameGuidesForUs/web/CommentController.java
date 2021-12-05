@@ -20,12 +20,6 @@ public class CommentController {
         this.userService = userService;
     }
 
-    @ModelAttribute
-    public CommentAddBindingModel commentAddBindingModel() {
-        return  new CommentAddBindingModel();
-    }
-
-
 
 
     @DeleteMapping("/comments/{guideId}/delete/{commentId}")
@@ -35,13 +29,11 @@ public class CommentController {
         if (userService.checkIfUserIsAdmin(currentUser)) {
             commentService.deleteComment(commentId);
         }
-    //TODO add unathorized error
 
         return "redirect:/games/guides/{guideId}/view";
     }
 
 
-    //TODO CREATE UPDATE COMMENT SECTION FOR ONLY ADMIN OR CREATOR
 
 
 

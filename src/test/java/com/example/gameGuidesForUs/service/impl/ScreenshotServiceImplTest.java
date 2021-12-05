@@ -53,15 +53,34 @@ class ScreenshotServiceImplTest {
 
     }
 
+    @Test
+    void testAddingScreenshot() throws IOException {
+        CloudinaryImage testImage = new CloudinaryImage();
+        MockMultipartFile testFile = new MockMultipartFile("TestFile", "testststs".getBytes(StandardCharsets.UTF_8));
+        Mockito.when(mockCloudinaryService.upload(testFile))
+                .thenReturn(testImage);
+        Mockito.when(mockCloudinaryService.upload(testFile).getUrl())
+                .thenReturn(testImage.getUrl());
+        Screenshot screenshot = screenshotToTest.setUrl(testImage.getUrl());
 
+
+    }
+
+    @Test
+    void testDeletionOfScreenshot() {
+        Screenshot testScreenshot = this.screenshotToTest;
+        Mockito.when(mockScreenshotRepository.findById(testScreenshot.getId()))
+                .thenReturn(Optional.of(testScreenshot));
+        serviceToTest.deleteScreenshot(testScreenshot.getId());
+        Mockito.verify(mockScreenshotRepository, Mockito.times(1))
+                .deleteById(testScreenshot.getId());
+    }
 
 
     @Test
     void testAllScreenshotIds() {
-
         serviceToTest.findAllScreenshotId();
         Mockito.verify(mockScreenshotRepository, Mockito.times(1)).allScreenshotIds();
-
 
     }
 }

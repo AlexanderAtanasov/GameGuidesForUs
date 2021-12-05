@@ -42,7 +42,6 @@ class GameServiceImplTest {
     private GameServiceImpl serviceToTest;
     private Game testGame;
 
-
     @Mock
     private GameRepository mockedGameRepository;
     @Mock
@@ -108,12 +107,13 @@ class GameServiceImplTest {
     @Test
     void testFindScreenshotId() {
         Game testGame = this.testGame;
-        String testScreenshotUrl= "Some Url Test.anotheru/rlf/tests.com";
 
-        ObjectNotFound throwsObjNF = Assertions.assertThrows(ObjectNotFound.class, () -> {
+        Mockito.when(mockedGameRepository.findById(testGame.getId()))
+                .thenReturn(Optional.of(testGame));
+        String testScreenshotUrl = "Some Url Test.anotheru/rlf/tests.com";
+        testGame.setGameScreenshotUrl(testScreenshotUrl);
+        serviceToTest.findGameScreenshotId(testGame.getId());
 
-            Mockito.when(serviceToTest.findGameScreenshotId(testGame.getId())).thenReturn(testScreenshotUrl);
-        });
     }
 
     @Test
@@ -127,20 +127,11 @@ class GameServiceImplTest {
 
     @Test
     void testGetAllGamesForRandomPresentation() {
+        Game testGame = this.testGame;
         HomeViewModel testHomeView = new HomeViewModel();
+        List<Game> testGameList = new ArrayList<>();
         List<HomeViewModel> testList = new ArrayList<>();
-        testList.add(new HomeViewModel());
-        testList.add(new HomeViewModel());
-        testList.add(new HomeViewModel());
-        serviceToTest.getAllGamesForRandomShow();
-
-//        IndexOutOfBoundsException throwsIOOB = Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-//
-//  Mockito.when(mockedGameRepository.findAll().stream()
-//                .map(game -> mockedModelMapper.map(game, HomeViewModel.class)).collect(Collectors.toList())
-//                  .get(ThreadLocalRandom.current().nextInt(0,testList.size())))
-//          .thenReturn(testList.get(ThreadLocalRandom.current().nextInt(0,testList.size())));
-//        });
+        testList.add(testHomeView);
 
 
 
