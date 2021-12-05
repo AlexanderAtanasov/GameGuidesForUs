@@ -34,12 +34,11 @@ public class UserController {
 
     @GetMapping("/logout-timeout")
     public String timeout() {
-
         return "redirect:login";
     }
 
     @GetMapping("/login")
-    public String log() {
+    public String log(Model model) {
         return "login";
     }
 
